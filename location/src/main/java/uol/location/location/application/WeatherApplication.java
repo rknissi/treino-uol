@@ -2,14 +2,14 @@ package uol.location.location.application;
 
 import org.springframework.stereotype.Component;
 import uol.location.location.objects.Weather;
-import uol.location.location.repository.WeatherRestRepository;
+import uol.location.location.gateway.WeatherGateway;
 
 @Component
 public class WeatherApplication {
-    private final WeatherRestRepository weatherRestRepository;
+    private final WeatherGateway weatherGateway;
 
-    public WeatherApplication(WeatherRestRepository weatherRestRepository) {
-        this.weatherRestRepository = weatherRestRepository;
+    public WeatherApplication(WeatherGateway weatherGateway) {
+        this.weatherGateway = weatherGateway;
     }
 
     public Weather getWeatherFromLatLog(String lat, String log) {
@@ -17,11 +17,11 @@ public class WeatherApplication {
     }
 
     private Long getWhereOnEarthId(String lat, String log) {
-        return weatherRestRepository.getWeatherId(lat, log);
+        return weatherGateway.getWoeId(lat, log);
     }
 
     private Weather getWeatherTemp(Long whereOnEarthId) {
-        return weatherRestRepository.getWeatherTemps(whereOnEarthId);
+        return weatherGateway.getWeatherTemps(whereOnEarthId);
     }
 
 }

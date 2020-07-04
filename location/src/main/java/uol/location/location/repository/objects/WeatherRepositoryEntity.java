@@ -1,9 +1,9 @@
-package uol.location.location.objects;
+package uol.location.location.repository.objects;
 
 import javax.persistence.*;
 
 @Entity
-public class WeatherEntity {
+public class WeatherRepositoryEntity {
 
     @Id
     @SequenceGenerator(name="weatherId",sequenceName="weatherId")
@@ -14,7 +14,7 @@ public class WeatherEntity {
     private Long maxTemp;
 
     @OneToOne
-    private LocationEntity locationEntity;
+    private LocationRepositoryEntity locationRepositoryEntity;
 
     public Long getId() {
         return id;
@@ -40,11 +40,11 @@ public class WeatherEntity {
         this.maxTemp = maxTemp;
     }
 
-    public LocationEntity getLocationEntity() {
-        return locationEntity;
+    public LocationRepositoryEntity getLocationRepositoryEntity() {
+        return locationRepositoryEntity;
     }
 
-    public void setLocationEntity(LocationEntity locationEntity) {
-        this.locationEntity = locationEntity;
+    public void setLocationRepositoryEntity(LocationRepositoryEntity locationRepositoryEntity) {
+        this.locationRepositoryEntity = locationRepositoryEntity;
     }
 }

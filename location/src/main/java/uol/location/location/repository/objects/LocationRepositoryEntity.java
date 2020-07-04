@@ -1,9 +1,9 @@
-package uol.location.location.objects;
+package uol.location.location.repository.objects;
 
 import javax.persistence.*;
 
 @Entity
-public class LocationEntity {
+public class LocationRepositoryEntity {
     @Id
     @SequenceGenerator(name="locationId",sequenceName="locationId")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="locationId")
@@ -19,7 +19,7 @@ public class LocationEntity {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "weather_id", referencedColumnName = "id")
-    private WeatherEntity weatherEntity;
+    private WeatherRepositoryEntity weatherRepositoryEntity;
 
     public Long getId() {
         return id;
@@ -85,11 +85,11 @@ public class LocationEntity {
         this.longitude = longitude;
     }
 
-    public WeatherEntity getWeatherEntity() {
-        return weatherEntity;
+    public WeatherRepositoryEntity getWeatherRepositoryEntity() {
+        return weatherRepositoryEntity;
     }
 
-    public void setWeatherEntity(WeatherEntity weatherEntity) {
-        this.weatherEntity = weatherEntity;
+    public void setWeatherRepositoryEntity(WeatherRepositoryEntity weatherRepositoryEntity) {
+        this.weatherRepositoryEntity = weatherRepositoryEntity;
     }
 }

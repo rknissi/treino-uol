@@ -1,6 +1,6 @@
-package uol.location.location.objects;
+package uol.location.location.gateway.objects;
 
-public class WeatherLocation {
+public class WeatherGatewayWoeId {
     private Integer woeid;
 
     public Integer getWoeid() {

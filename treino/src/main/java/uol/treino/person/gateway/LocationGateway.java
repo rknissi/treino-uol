@@ -1,11 +1,11 @@
-package uol.treino.person.repository;
+package uol.treino.person.gateway;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import uol.treino.person.objects.Location;
 
 @Component
-public class LocationRepository {
+public class LocationGateway {
     public Location getById(Long id) {
         RestTemplate restTemplate = new RestTemplate();
         Location location = restTemplate.getForObject("http://localhost:8081/locations/" + id, Location.class);

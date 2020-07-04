@@ -1,33 +1,33 @@
-package uol.location.location.repository;
+package uol.location.location.gateway;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import uol.location.location.objects.Weather;
-import uol.location.location.objects.WeatherList;
-import uol.location.location.objects.WeatherLocation;
+import uol.location.location.gateway.objects.WeatherGatewayResponse;
+import uol.location.location.gateway.objects.WeatherGatewayWoeId;
 
 @Component
-public class WeatherRestRepository {
-    public Long getWeatherId(String lat, String log) {
+public class WeatherGateway {
+    public Long getWoeId(String lat, String log) {
         RestTemplate restTemplate = new RestTemplate();
-        WeatherLocation[] weatherLocationList =
+        WeatherGatewayWoeId[] weatherGatewayWoeIdList =
                 restTemplate
                         .getForObject("https://www.metaweather.com/api/location/search/?lattlong="
                                         + lat
                                         + ","
                                         + log,
-                                WeatherLocation[].class);
+                                WeatherGatewayWoeId[].class);
 
-        return weatherLocationList[0].getWoeid().longValue();
+        return weatherGatewayWoeIdList[0].getWoeid().longValue();
     }
 
     public Weather getWeatherTemps(Long whereOnEarthId) {
         RestTemplate restTemplate = new RestTemplate();
-        WeatherList weatherLocationResponseList =
+        WeatherGatewayResponse weatherLocationResponseList =
                 restTemplate
                         .getForObject("https://www.metaweather.com/api/location/"
                                     + whereOnEarthId,
-                                WeatherList.class);
+                                WeatherGatewayResponse.class);
 
         return weatherLocationResponseList.getWeatherList().get(0);
     }

@@ -1,10 +1,10 @@
-package uol.treino.person.objects;
+package uol.treino.person.repository.objects;
 
 
 import javax.persistence.*;
 
 @Entity
-public class PersonEntity {
+public class PersonRepositoryEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -14,11 +14,11 @@ public class PersonEntity {
     private Integer age;
     private Long locationId;
 
-    public PersonEntity()
+    public PersonRepositoryEntity()
     {
     }
 
-    public PersonEntity(String name, Integer age) {
+    public PersonRepositoryEntity(String name, Integer age) {
         this.name = name;
         this.age = age;
     }

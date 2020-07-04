@@ -1,10 +1,11 @@
-package uol.location.location.objects;
+package uol.location.location.gateway.objects;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import uol.location.location.objects.Weather;
 
 import java.util.List;
 
-public class WeatherList {
+public class WeatherGatewayResponse {
     @JsonProperty("consolidated_weather")
     private List<Weather> weatherList;
 
