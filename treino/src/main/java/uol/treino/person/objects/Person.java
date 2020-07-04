@@ -1,5 +1,7 @@
 package uol.treino.person.objects;
 
+import uol.treino.person.gateway.objects.Location;
+
 public class Person {
     private Long id;
     private String name;

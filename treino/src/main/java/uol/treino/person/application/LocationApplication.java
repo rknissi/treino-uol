@@ -1,27 +1,27 @@
 package uol.treino.person.application;
 
 import org.springframework.stereotype.Component;
-import uol.treino.person.repository.LocationRepository;
-import uol.treino.person.objects.Location;
+import uol.treino.person.gateway.LocationGateway;
+import uol.treino.person.gateway.objects.Location;
 
 @Component
 public class LocationApplication {
 
-    private final LocationRepository locationRepository;
+    private final LocationGateway locationGateway;
 
-    public LocationApplication(LocationRepository locationRepository) {
-        this.locationRepository = locationRepository;
+    public LocationApplication(LocationGateway locationGateway) {
+        this.locationGateway = locationGateway;
     }
 
     public Location getById(Long id) {
-        return locationRepository.getById(id);
+        return locationGateway.getById(id);
     }
 
     public Location create(String ip) {
-        return locationRepository.create(ip);
+        return locationGateway.create(ip);
     }
 
     public void deleteByid(Long id) {
-        locationRepository.delete(id);
+        locationGateway.delete(id);
     }
 }

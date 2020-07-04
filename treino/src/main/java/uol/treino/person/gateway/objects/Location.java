@@ -1,6 +1,7 @@
-package uol.treino.person.objects;
+package uol.treino.person.gateway.objects;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import uol.treino.person.gateway.objects.Weather;
 
 public class Location {
     private Long id;

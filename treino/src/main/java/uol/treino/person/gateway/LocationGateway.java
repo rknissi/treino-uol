@@ -2,7 +2,7 @@ package uol.treino.person.gateway;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-import uol.treino.person.objects.Location;
+import uol.treino.person.gateway.objects.Location;
 
 @Component
 public class LocationGateway {

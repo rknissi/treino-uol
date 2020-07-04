@@ -5,7 +5,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 import uol.treino.person.objects.Person;
-import uol.treino.person.objects.PersonEntity;
 import uol.treino.person.application.PersonApplication;
 
 import javax.servlet.http.HttpServletRequest;

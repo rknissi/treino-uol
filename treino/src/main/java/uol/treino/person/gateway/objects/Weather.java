@@ -1,4 +1,4 @@
-package uol.treino.person.objects;
+package uol.treino.person.gateway.objects;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

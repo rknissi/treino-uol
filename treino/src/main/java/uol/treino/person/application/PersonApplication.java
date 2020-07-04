@@ -3,9 +3,9 @@ package uol.treino.person.application;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
-import uol.treino.person.objects.Location;
+import uol.treino.person.gateway.objects.Location;
 import uol.treino.person.objects.Person;
-import uol.treino.person.objects.PersonEntity;
+import uol.treino.person.repository.objects.PersonRepositoryEntity;
 import uol.treino.person.repository.PersonRepository;
 
 import java.util.LinkedList;
@@ -24,52 +24,52 @@ public class PersonApplication {
     }
 
     public Person create(Person person, String ip) {
-        PersonEntity personEntity = new PersonEntity();
-        BeanUtils.copyProperties(person, personEntity);
+        PersonRepositoryEntity personRepositoryEntity = new PersonRepositoryEntity();
+        BeanUtils.copyProperties(person, personRepositoryEntity);
         Location location = locationApplication.create(ip);
         person.setLocation(location);
-        personEntity.setLocationId(location.getId());
-        person.setId(personRepository.save(personEntity).getId());
+        personRepositoryEntity.setLocationId(location.getId());
+        person.setId(personRepository.save(personRepositoryEntity).getId());
         return person;
     }
 
     public Person patch(Long id, Person person) {
         if (personRepository.existsById(id)) {
-            PersonEntity personEntity = personRepository.findById(id).get();
-            personRepository.save(applyDiff(personEntity, person));
-            BeanUtils.copyProperties(personEntity, person);
-            person.setLocation(locationApplication.getById(personEntity.getLocationId()));
+            PersonRepositoryEntity personRepositoryEntity = personRepository.findById(id).get();
+            personRepository.save(applyDiff(personRepositoryEntity, person));
+            BeanUtils.copyProperties(personRepositoryEntity, person);
+            person.setLocation(locationApplication.getById(personRepositoryEntity.getLocationId()));
             return person;
         }
         return null;
     }
 
     public Person getById(Long id) {
-        Optional<PersonEntity> optionalPersonEntity = personRepository.findById(id);
+        Optional<PersonRepositoryEntity> optionalPersonEntity = personRepository.findById(id);
         if (optionalPersonEntity.isPresent()) {
-            PersonEntity personEntity = optionalPersonEntity.get();
+            PersonRepositoryEntity personRepositoryEntity = optionalPersonEntity.get();
             Person person = new Person();
-            BeanUtils.copyProperties(personEntity, person);
-            person.setLocation(locationApplication.getById(personEntity.getLocationId()));
+            BeanUtils.copyProperties(personRepositoryEntity, person);
+            person.setLocation(locationApplication.getById(personRepositoryEntity.getLocationId()));
             return person;
         }
         return null;
     }
 
     public List<Person> getAll() {
-        Iterable<PersonEntity> personEntities = personRepository.findAll();
+        Iterable<PersonRepositoryEntity> personEntities = personRepository.findAll();
         List<Person> persons = new LinkedList<>();
-        personEntities.forEach(personEntity -> {
+        personEntities.forEach(personRepositoryEntity -> {
             Person person = new Person();
-            BeanUtils.copyProperties(personEntity, person);
-            person.setLocation(locationApplication.getById(personEntity.getLocationId()));
+            BeanUtils.copyProperties(personRepositoryEntity, person);
+            person.setLocation(locationApplication.getById(personRepositoryEntity.getLocationId()));
             persons.add(person);
         });
         return persons;
     }
 
     public boolean delete(Long id) {
-        Optional<PersonEntity> personEntity = personRepository.findById(id);
+        Optional<PersonRepositoryEntity> personEntity = personRepository.findById(id);
         if (personEntity.isPresent()) {
             personRepository.deleteById(id);
             locationApplication.deleteByid(personEntity.get().getLocationId());
@@ -78,16 +78,16 @@ public class PersonApplication {
         return false;
     }
 
-    private PersonEntity applyDiff(PersonEntity personEntity, Person person) {
-        if (!ObjectUtils.isEmpty(personEntity) && !ObjectUtils.isEmpty(person)) {
+    private PersonRepositoryEntity applyDiff(PersonRepositoryEntity personRepositoryEntity, Person person) {
+        if (!ObjectUtils.isEmpty(personRepositoryEntity) && !ObjectUtils.isEmpty(person)) {
             if (!ObjectUtils.isEmpty(person.getName())) {
-                personEntity.setName(person.getName());
+                personRepositoryEntity.setName(person.getName());
             }
             if (!ObjectUtils.isEmpty(person.getAge())) {
-                personEntity.setAge(person.getAge());
+                personRepositoryEntity.setAge(person.getAge());
             }
         }
-        return personEntity;
+        return personRepositoryEntity;
     }
 
 }
