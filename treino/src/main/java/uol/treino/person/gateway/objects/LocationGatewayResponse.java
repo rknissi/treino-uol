@@ -1,20 +1,15 @@
 package uol.treino.person.gateway.objects;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import uol.treino.person.gateway.objects.Weather;
-
-public class Location {
+public class LocationGatewayResponse {
     private Long id;
 
-    @JsonProperty("country_name")
     private String country;
 
-    @JsonProperty("city_name")
     private String city;
 
     private String latitude;
     private String longitude;
-    private Weather weather;
+    private WeatherGatewayResponse weather;
 
     public Long getId() {
         return id;
@@ -56,11 +51,11 @@ public class Location {
         this.longitude = longitude;
     }
 
-    public Weather getWeather() {
+    public WeatherGatewayResponse getWeather() {
         return weather;
     }
 
-    public void setWeather(Weather weather) {
+    public void setWeather(WeatherGatewayResponse weather) {
         this.weather = weather;
     }
 }

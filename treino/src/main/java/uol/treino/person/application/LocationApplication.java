@@ -2,7 +2,8 @@ package uol.treino.person.application;
 
 import org.springframework.stereotype.Component;
 import uol.treino.person.gateway.LocationGateway;
-import uol.treino.person.gateway.objects.Location;
+import uol.treino.person.gateway.objects.LocationGatewayResponse;
+import uol.treino.person.objects.Location;
 
 @Component
 public class LocationApplication {

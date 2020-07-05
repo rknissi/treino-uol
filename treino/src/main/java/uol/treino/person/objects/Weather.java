@@ -1,15 +1,8 @@
-package uol.treino.person.gateway.objects;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
+package uol.treino.person.objects;
 
 public class Weather {
-
     private Long id;
-
-    @JsonProperty("min_temp")
     private Long minTemp;
-
-    @JsonProperty("max_temp")
     private Long maxTemp;
 
     public Long getMinTemp() {
