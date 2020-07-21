@@ -6,20 +6,20 @@ create sequence locationId;
 
 CREATE TABLE weather (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  mintemp NUMBER NOT NULL,
-  maxTemp NUMBER NOT NULL
+  mintemp NUMBER ,
+  maxTemp NUMBER
 );
 
 CREATE TABLE location (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  continent VARCHAR(250) NOT NULL,
-  country VARCHAR(250) NOT NULL,
-  subdivision1 VARCHAR(250) NOT NULL,
-  subdivision2 VARCHAR(250) NOT NULL,
-  city VARCHAR(250) NOT NULL,
-  latitude VARCHAR(250) NOT NULL,
-  longitude VARCHAR(250) NOT NULL,
-  weather_id int NOT NULL,
+  continent VARCHAR(250) ,
+  country VARCHAR(250) ,
+  subdivision1 VARCHAR(250) ,
+  subdivision2 VARCHAR(250) ,
+  city VARCHAR(250) ,
+  latitude VARCHAR(250) ,
+  longitude VARCHAR(250) ,
+  weather_id int ,
   foreign key (weather_id) REFERENCES weather(id)
 );
 

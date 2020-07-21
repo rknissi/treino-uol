@@ -19,7 +19,7 @@ public class LocationRepositoryEntity {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "weather_id", referencedColumnName = "id")
-    private WeatherRepositoryEntity weatherRepositoryEntity;
+    private WeatherRepositoryEntity weather;
 
     public Long getId() {
         return id;
@@ -85,11 +85,11 @@ public class LocationRepositoryEntity {
         this.longitude = longitude;
     }
 
-    public WeatherRepositoryEntity getWeatherRepositoryEntity() {
-        return weatherRepositoryEntity;
+    public WeatherRepositoryEntity getWeather() {
+        return weather;
     }
 
-    public void setWeatherRepositoryEntity(WeatherRepositoryEntity weatherRepositoryEntity) {
-        this.weatherRepositoryEntity = weatherRepositoryEntity;
+    public void setWeather(WeatherRepositoryEntity weather) {
+        this.weather = weather;
     }
 }
