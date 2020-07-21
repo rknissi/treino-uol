@@ -1,5 +1,8 @@
 package uol.treino.person.objects;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Location {
     private Long id;
 
