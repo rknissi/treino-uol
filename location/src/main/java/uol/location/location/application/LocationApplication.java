@@ -12,10 +12,12 @@ import java.util.Optional;
 public class LocationApplication {
 
 	private final LocationRepository locationRepository;
+	private final MessageSenderApplication messageSenderApplication;
 	private final LocationAsyncApplication locationAsyncApplication;
 
-	public LocationApplication(LocationRepository locationRepository, LocationAsyncApplication locationAsyncApplication) {
+	public LocationApplication(LocationRepository locationRepository, MessageSenderApplication messageSenderApplication, LocationAsyncApplication locationAsyncApplication) {
 		this.locationRepository = locationRepository;
+		this.messageSenderApplication = messageSenderApplication;
 		this.locationAsyncApplication = locationAsyncApplication;
 	}
 
@@ -23,7 +25,8 @@ public class LocationApplication {
 	    Location location = new Location();
 		LocationRepositoryEntity locationRepositoryEntity = new LocationRepositoryEntity();
 		locationRepository.save(locationRepositoryEntity);
-		locationAsyncApplication.populateData(ipv4, locationRepositoryEntity);
+		messageSenderApplication.sendMessage(ipv4, locationRepositoryEntity.getId());
+		//locationAsyncApplication.populateData(ipv4, locationRepositoryEntity);
 		BeanUtils.copyProperties(locationRepositoryEntity, location);
 		return location;
 	}
