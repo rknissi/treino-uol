@@ -1,0 +1,13 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/locations/"
+  },
+  "response": {
+    "status": 201,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": "{\"id\":1,\"continent\":null,\"country\":null,\"subdivision1\":null,\"subdivision2\":null,\"city\":null,\"latitude\":null,\"longitude\":null,\"weather\":{\"id\":null,\"minTemp\":null,\"maxTemp\":null}}"
+  }
+}

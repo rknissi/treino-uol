@@ -1,0 +1,13 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/locations/1"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": "{\n    \"id\": 1,\n    \"name\": \"Teste\",\n    \"age\": 15,\n    \"location\": {\n        \"id\": 3,\n        \"country\": \"Brazil\",\n        \"city\": \"São Paulo\",\n        \"latitude\": \"-23.57330\",\n        \"longitude\": \"-46.64170\",\n        \"weather\": {\n            \"id\": 3,\n            \"minTemp\": 14,\n            \"maxTemp\": 16\n        }\n    }\n}"
+  }
+}
