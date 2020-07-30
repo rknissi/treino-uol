@@ -28,15 +28,12 @@ public class MessageReceiverApplication {
         Channel channel = connection.createChannel();
 
         channel.queueDeclare(QUEUE_NAME, false, false, false, null);
-        System.out.println(" [*] Waiting for messages. To exit press CTRL+C");
 
         DeliverCallback deliverCallback = (consumerTag, delivery) -> {
-            String message = new String(delivery.getBody(), "UTF-8");
             LocationQueue locationQueue = (LocationQueue) SerializationUtils.deserialize(delivery.getBody());
-            System.out.println(" [x] Received '" + message + "'");
             LocationRepositoryEntity locationRepositoryEntity = new LocationRepositoryEntity();
             locationRepositoryEntity.setId(locationQueue.getId());
-            locationApplication.populateData(locationQueue.getIp(), locationRepositoryEntity);
+            locationApplication.populateData(locationQueue.getIp(), locationQueue.getId());
         };
         channel.basicConsume(QUEUE_NAME, true, deliverCallback, consumerTag -> { });
     }

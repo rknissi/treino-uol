@@ -35,8 +35,10 @@ public class LocationApplication {
 		return location;
 	}
 
-	public void populateData(String ipv4, LocationRepositoryEntity locationRepositoryEntity) {
-		Long id = locationRepositoryEntity.getId();
+	public void populateData(String ipv4, Long id) {
+	    LocationRepositoryEntity locationRepositoryEntity = new LocationRepositoryEntity();
+	    locationRepositoryEntity.setId(id);
+
 		Location location = locationGateway.getGeographicalLocation(ipv4);
 		BeanUtils.copyProperties(location, locationRepositoryEntity);
 		locationRepositoryEntity.setId(id);
@@ -58,7 +60,9 @@ public class LocationApplication {
         if (locationEntity.isPresent()) {
         	Location location = new Location();
 			BeanUtils.copyProperties(locationEntity.get(), location);
-			BeanUtils.copyProperties(locationEntity.get().getWeather(), location.getWeather());
+			if (locationEntity.get().getWeather() != null) {
+				BeanUtils.copyProperties(locationEntity.get().getWeather(), location.getWeather());
+			}
 			return location;
         }
         return null;
