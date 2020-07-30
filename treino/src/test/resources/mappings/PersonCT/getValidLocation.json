@@ -1,0 +1,13 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/locations/3"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": "{\"id\":1,\"continent\":\"South America\",\"country\":\"Brazil\",\"subdivision1\":\"Sao Paulo\",\"subdivision2\":null,\"city\":\"São Paulo\",\"latitude\":\"-23.57330\",\"longitude\":\"-46.64170\",\"weather\":{\"id\":1,\"minTemp\":13,\"maxTemp\":15}}"
+  }
+}
