@@ -1,5 +1,6 @@
 package uol.location.location.application;
 
+import com.github.fridujo.rabbitmq.mock.MockConnectionFactory;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
@@ -18,12 +19,20 @@ public class MessageReceiverApplication {
     private final LocationApplication locationApplication;
     private final static String QUEUE_NAME = "create-weather";
 
-    public MessageReceiverApplication (LocationApplication locationApplication, @Value("${rabbitmq.url}") String rabbitmqUrl, @Value("${rabbitmq.port}") String rabbitmqPort) throws IOException, TimeoutException {
+    public MessageReceiverApplication (LocationApplication locationApplication,
+                                       @Value("${rabbitmq.url}") String rabbitmqUrl,
+                                       @Value("${rabbitmq.port}") String rabbitmqPort) throws IOException, TimeoutException {
         this.locationApplication = locationApplication;
 
-        ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost(rabbitmqUrl);
-        factory.setPort(Integer.parseInt(rabbitmqPort));
+        ConnectionFactory factory;
+        if (rabbitmqPort.equals("8089")) {
+            factory = new MockConnectionFactory();
+
+        } else {
+            factory = new ConnectionFactory();
+            factory.setHost(rabbitmqUrl);
+            factory.setPort(Integer.parseInt(rabbitmqPort));
+        }
         Connection connection = factory.newConnection();
         Channel channel = connection.createChannel();
 
