@@ -1,18 +1,25 @@
 package uol.location.location.gateway;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import uol.location.location.objects.Weather;
 import uol.location.location.gateway.objects.WeatherGatewayResponse;
 import uol.location.location.gateway.objects.WeatherGatewayWoeId;
 
-@Component
+@Configuration
 public class WeatherGateway {
+
+    @Value("${metaweather.url}")
+    String metaweatherUrl;
+
     public Long getWoeId(String lat, String log) {
         RestTemplate restTemplate = new RestTemplate();
         WeatherGatewayWoeId[] weatherGatewayWoeIdList =
                 restTemplate
-                        .getForObject("https://www.metaweather.com/api/location/search/?lattlong="
+                        .getForObject(metaweatherUrl +
+                                        "search/?lattlong="
                                         + lat
                                         + ","
                                         + log,
@@ -25,7 +32,7 @@ public class WeatherGateway {
         RestTemplate restTemplate = new RestTemplate();
         WeatherGatewayResponse weatherLocationResponseList =
                 restTemplate
-                        .getForObject("https://www.metaweather.com/api/location/"
+                        .getForObject(metaweatherUrl
                                     + whereOnEarthId,
                                 WeatherGatewayResponse.class);
 
