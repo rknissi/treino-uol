@@ -40,6 +40,27 @@ public class LocationCT {
     }
 
     @Test
+    public void createLocationCT() {
+        Location location = locationApplication.create("127.0.0.1");
+
+        Assert.assertEquals("2", location.getId().toString());
+        Assert.assertNull(location.getCountry());
+        Assert.assertNull(location.getCity());
+        Assert.assertNull(location.getWeather().getId());
+        Assert.assertNull(location.getWeather().getMaxTemp());
+        Assert.assertNull(location.getWeather().getMinTemp());
+    }
+
+    @Test
+    public void deleteLocationById() {
+        addLocation(2L, "Teste", "Teste2", 2L, 10L, 5L);
+        Boolean aBoolean = locationApplication.deleteById(2L);
+
+        Assert.assertEquals(true, aBoolean);
+    }
+
+
+    @Test
     public void getLocationByIdCT() {
         Location location = locationApplication.getById(1L);
 
@@ -66,7 +87,8 @@ public class LocationCT {
         locationRepositoryEntity.setWeather(weatherRepositoryEntity);
 
         locationRepository.save(locationRepositoryEntity);
-
     }
+
+
 
 }

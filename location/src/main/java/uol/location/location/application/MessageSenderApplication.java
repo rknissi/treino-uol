@@ -1,5 +1,6 @@
 package uol.location.location.application;
 
+import com.github.fridujo.rabbitmq.mock.MockConnectionFactory;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
@@ -18,7 +19,11 @@ public class MessageSenderApplication {
     private ConnectionFactory factory;
 
     public MessageSenderApplication(@Value("${rabbitmq.url}") String rabbitmqUrl, @Value("${rabbitmq.port}") String rabbitmqPort) {
-        factory = new ConnectionFactory();
+        if (rabbitmqPort.equals("8089")) {
+            factory = new MockConnectionFactory();
+        } else {
+            factory = new ConnectionFactory();
+        }
         factory.setHost(rabbitmqUrl);
         factory.setPort(Integer.parseInt(rabbitmqPort));
     }
