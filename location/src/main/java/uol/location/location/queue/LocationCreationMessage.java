@@ -4,15 +4,15 @@ import uol.location.location.repository.objects.LocationRepositoryEntity;
 
 import java.io.Serializable;
 
-public class LocationQueue implements Serializable {
+public class LocationCreationMessage implements Serializable {
 
     private String ip;
     private Long id;
 
-    public LocationQueue(){
+    public LocationCreationMessage(){
     }
 
-    public LocationQueue(String ip, Long id) {
+    public LocationCreationMessage(String ip, Long id) {
         this.ip = ip;
         this.id = id;
     }

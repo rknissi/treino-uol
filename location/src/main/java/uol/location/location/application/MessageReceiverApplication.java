@@ -8,7 +8,7 @@ import com.rabbitmq.client.DeliverCallback;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.SerializationUtils;
-import uol.location.location.queue.LocationQueue;
+import uol.location.location.queue.LocationCreationMessage;
 import uol.location.location.repository.objects.LocationRepositoryEntity;
 
 import java.io.IOException;
@@ -39,10 +39,10 @@ public class MessageReceiverApplication {
         channel.queueDeclare(QUEUE_NAME, false, false, false, null);
 
         DeliverCallback deliverCallback = (consumerTag, delivery) -> {
-            LocationQueue locationQueue = (LocationQueue) SerializationUtils.deserialize(delivery.getBody());
+            LocationCreationMessage locationCreationMessage = (LocationCreationMessage) SerializationUtils.deserialize(delivery.getBody());
             LocationRepositoryEntity locationRepositoryEntity = new LocationRepositoryEntity();
-            locationRepositoryEntity.setId(locationQueue.getId());
-            locationApplication.populateData(locationQueue.getIp(), locationQueue.getId());
+            locationRepositoryEntity.setId(locationCreationMessage.getId());
+            locationApplication.populateData(locationCreationMessage.getIp(), locationCreationMessage.getId());
         };
         channel.basicConsume(QUEUE_NAME, true, deliverCallback, consumerTag -> { });
     }

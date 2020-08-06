@@ -15,13 +15,13 @@ import java.util.Optional;
 public class LocationApplication {
 
 	private final LocationRepository locationRepository;
-	private final MessageSenderApplication messageSenderApplication;
+	private final LocationCreationProducerApplication locationCreationProducerApplication;
 	private final LocationGateway locationGateway;
 	private final WeatherApplication weatherApplication;
 
-	public LocationApplication(LocationRepository locationRepository, MessageSenderApplication messageSenderApplication, LocationGateway locationGateway, WeatherApplication weatherApplication) {
+	public LocationApplication(LocationRepository locationRepository, LocationCreationProducerApplication locationCreationProducerApplication, LocationGateway locationGateway, WeatherApplication weatherApplication) {
 		this.locationRepository = locationRepository;
-		this.messageSenderApplication = messageSenderApplication;
+		this.locationCreationProducerApplication = locationCreationProducerApplication;
 		this.locationGateway = locationGateway;
 		this.weatherApplication = weatherApplication;
 	}
@@ -30,7 +30,7 @@ public class LocationApplication {
 	    Location location = new Location();
 		LocationRepositoryEntity locationRepositoryEntity = new LocationRepositoryEntity();
 		locationRepository.save(locationRepositoryEntity);
-		messageSenderApplication.sendMessage(ipv4, locationRepositoryEntity.getId());
+		locationCreationProducerApplication.sendMessage(ipv4, locationRepositoryEntity.getId());
 		BeanUtils.copyProperties(locationRepositoryEntity, location);
 		return location;
 	}
