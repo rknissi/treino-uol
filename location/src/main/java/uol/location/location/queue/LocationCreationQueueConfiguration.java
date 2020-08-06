@@ -11,11 +11,11 @@ import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
 @Configuration
-public class LocationCreationProducerConfiguration {
+public class LocationCreationQueueConfiguration {
 
     private ConnectionFactory factory;
 
-    public LocationCreationProducerConfiguration(@Value("${rabbitmq.url}") String rabbitmqUrl, @Value("${rabbitmq.port}") String rabbitmqPort) {
+    public LocationCreationQueueConfiguration(@Value("${rabbitmq.url}") String rabbitmqUrl, @Value("${rabbitmq.port}") String rabbitmqPort) {
         if (rabbitmqPort.equals("8089")) {
             factory = new MockConnectionFactory();
         } else {
