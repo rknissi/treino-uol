@@ -2,7 +2,7 @@ package uol.location.location.application;
 
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.DeliverCallback;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 import org.springframework.util.SerializationUtils;
 import uol.location.location.queue.LocationCreationMessage;
 import uol.location.location.queue.LocationCreationQueueConfiguration;
@@ -11,7 +11,7 @@ import uol.location.location.repository.objects.LocationRepositoryEntity;
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
-@Configuration
+@Component
 public class LocationCreationConsumerApplication {
     private final LocationApplication locationApplication;
     private final LocationCreationQueueConfiguration locationCreationQueueConfiguration;
@@ -20,6 +20,8 @@ public class LocationCreationConsumerApplication {
     public LocationCreationConsumerApplication(LocationApplication locationApplication, LocationCreationQueueConfiguration locationCreationQueueConfiguration){
         this.locationApplication = locationApplication;
         this.locationCreationQueueConfiguration = locationCreationQueueConfiguration;
+
+        this.consumeMessage();
     }
 
     public void consumeMessage() {
