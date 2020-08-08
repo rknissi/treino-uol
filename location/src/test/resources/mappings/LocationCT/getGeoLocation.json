@@ -1,0 +1,13 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/177.140.72.58"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": "{\"status\":\"success\",\"data\":{\"ipv4\":\"177.140.72.58\",\"continent_name\":\"South America\",\"country_name\":\"Brazil\",\"subdivision_1_name\":\"Sao Paulo\",\"subdivision_2_name\":null,\"city_name\":\"S\\u00e3o Paulo\",\"latitude\":\"-23.57330\",\"longitude\":\"-46.64170\"}}"
+  }
+}
