@@ -1,7 +1,5 @@
 package uol.location.location.queue;
 
-import uol.location.location.repository.objects.LocationRepositoryEntity;
-
 import java.io.Serializable;
 
 public class LocationCreationMessage implements Serializable {
