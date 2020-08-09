@@ -48,7 +48,7 @@ public class LocationCT {
         broker.startup(brokerOptions);
 
 
-        addLocation(1L, "Brazil", "SP", 1L, 20L, 10L);
+        addLocation(1L, "Brazil", "São Paulo", 1L, 20L, 10L);
     }
 
     @Test
@@ -61,6 +61,23 @@ public class LocationCT {
         Assert.assertNull(location.getWeather().getId());
         Assert.assertNull(location.getWeather().getMaxTemp());
         Assert.assertNull(location.getWeather().getMinTemp());
+    }
+
+    @Test
+    public void createLocationAndGetUpdatedLocationCT() throws InterruptedException {
+        locationApplication.create("127.0.0.1");
+
+        Thread.sleep(3000);
+
+        Location location = locationApplication.getById(2L);
+
+        Assert.assertEquals("2", location.getId().toString());
+        Assert.assertEquals("Brazil", location.getCountry());
+        Assert.assertEquals("São Paulo", location.getCity());
+        Assert.assertEquals("2", location.getWeather().getId().toString());
+        Assert.assertEquals("25", location.getWeather().getMaxTemp().toString());
+        Assert.assertEquals("14", location.getWeather().getMinTemp().toString());
+
     }
 
     @Test
@@ -78,7 +95,7 @@ public class LocationCT {
 
         Assert.assertEquals("1", location.getId().toString());
         Assert.assertEquals("Brazil", location.getCountry());
-        Assert.assertEquals("SP", location.getCity());
+        Assert.assertEquals("São Paulo", location.getCity());
         Assert.assertEquals("1", location.getWeather().getId().toString());
         Assert.assertEquals("20", location.getWeather().getMaxTemp().toString());
         Assert.assertEquals("10", location.getWeather().getMinTemp().toString());

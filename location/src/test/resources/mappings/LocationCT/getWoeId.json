@@ -1,7 +1,7 @@
 {
   "request": {
     "method": "GET",
-    "url": "/api/location/search/?lattlong=-23.57330,-46.64170"
+    "url": "/search/?lattlong=-23.57330,-46.64170"
   },
   "response": {
     "status": 200,
