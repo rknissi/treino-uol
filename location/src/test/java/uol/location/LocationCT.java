@@ -1,6 +1,8 @@
 package uol.location;
 
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
+import org.apache.qpid.server.Broker;
+import org.apache.qpid.server.BrokerOptions;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
@@ -35,7 +37,17 @@ public class LocationCT {
     LocationRepository locationRepository;
 
     @Before
-    public void populateDatabase() {
+    public void populateDatabase() throws Exception {
+        Broker broker = new Broker();
+        BrokerOptions brokerOptions = new BrokerOptions();
+        brokerOptions.setConfigProperty("qpid.amqp_port", "6000");
+        brokerOptions.setConfigProperty("qpid.broker.defaultPreferenceStoreAttributes", "{\"type\": \"Noop\"}");
+        brokerOptions.setConfigProperty("qpid.vhost", "localhost");
+        brokerOptions.setConfigurationStoreType("Memory");
+        brokerOptions.setStartupLoggedToSystemOut(false);
+        broker.startup(brokerOptions);
+
+
         addLocation(1L, "Brazil", "SP", 1L, 20L, 10L);
     }
 
