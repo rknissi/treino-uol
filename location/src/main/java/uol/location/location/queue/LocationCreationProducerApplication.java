@@ -3,7 +3,6 @@ package uol.location.location.queue;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Component;
-import uol.location.location.queue.LocationCreationMessage;
 
 @Component
 public class LocationCreationProducerApplication {
