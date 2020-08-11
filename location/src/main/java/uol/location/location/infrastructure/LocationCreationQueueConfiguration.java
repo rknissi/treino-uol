@@ -1,4 +1,4 @@
-package uol.location.location.queue;
+package uol.location.location.infrastructure;
 
 import org.springframework.amqp.core.Queue;
 import org.springframework.context.annotation.Bean;

@@ -1,17 +1,14 @@
-package uol.location.location.objects;
+package uol.location.location.endpoint.resource;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Weather {
+public class WeatherEndpointBody {
 
     private Long id;
 
-    @JsonProperty("min_temp")
     private Long minTemp;
 
-    @JsonProperty("max_temp")
     private Long maxTemp;
 
     public Long getMinTemp() {

@@ -1,4 +1,4 @@
-package uol.location.location.application;
+package uol.location.location.queue;
 
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;

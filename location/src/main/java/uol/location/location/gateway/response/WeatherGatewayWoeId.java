@@ -1,4 +1,4 @@
-package uol.location.location.gateway.objects;
+package uol.location.location.gateway.response;
 
 public class WeatherGatewayWoeId {
     private Integer woeid;

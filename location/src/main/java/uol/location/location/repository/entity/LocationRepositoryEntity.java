@@ -1,4 +1,4 @@
-package uol.location.location.repository.objects;
+package uol.location.location.repository.entity;
 
 import javax.persistence.*;
 

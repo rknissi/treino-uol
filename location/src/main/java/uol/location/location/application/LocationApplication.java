@@ -3,11 +3,12 @@ package uol.location.location.application;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import uol.location.location.gateway.LocationGateway;
-import uol.location.location.objects.Location;
-import uol.location.location.objects.Weather;
-import uol.location.location.repository.objects.LocationRepositoryEntity;
+import uol.location.location.dto.Location;
+import uol.location.location.dto.Weather;
+import uol.location.location.queue.LocationCreationProducerApplication;
+import uol.location.location.repository.entity.LocationRepositoryEntity;
 import uol.location.location.repository.LocationRepository;
-import uol.location.location.repository.objects.WeatherRepositoryEntity;
+import uol.location.location.repository.entity.WeatherRepositoryEntity;
 
 import java.util.Optional;
 

@@ -1,6 +1,6 @@
-package uol.location.location.gateway.objects;
+package uol.location.location.gateway.response;
 
-import uol.location.location.objects.Location;
+import uol.location.location.dto.Location;
 
 public class LocationGatewayResponse {
     private String status;

@@ -1,8 +1,6 @@
-package uol.location.location.endpoint.objects;
+package uol.location.location.endpoint.resource;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
-import uol.location.location.objects.Weather;
 
 import java.io.Serializable;
 

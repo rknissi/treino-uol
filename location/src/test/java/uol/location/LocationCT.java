@@ -14,10 +14,10 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import uol.location.location.application.LocationApplication;
-import uol.location.location.objects.Location;
+import uol.location.location.dto.Location;
 import uol.location.location.repository.LocationRepository;
-import uol.location.location.repository.objects.LocationRepositoryEntity;
-import uol.location.location.repository.objects.WeatherRepositoryEntity;
+import uol.location.location.repository.entity.LocationRepositoryEntity;
+import uol.location.location.repository.entity.WeatherRepositoryEntity;
 
 import static org.springframework.test.annotation.DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD;
 

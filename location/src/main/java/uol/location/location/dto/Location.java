@@ -1,4 +1,4 @@
-package uol.location.location.objects;
+package uol.location.location.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;

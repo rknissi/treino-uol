@@ -6,8 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 import uol.location.location.application.LocationApplication;
-import uol.location.location.endpoint.objects.LocationEnpointBody;
-import uol.location.location.objects.Location;
+import uol.location.location.endpoint.resource.LocationEnpointBody;
+import uol.location.location.dto.Location;
 
 @RestController
 public class LocationEndpoint {
