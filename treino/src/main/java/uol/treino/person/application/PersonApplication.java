@@ -3,6 +3,7 @@ package uol.treino.person.application;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
+import uol.treino.person.converter.PersonConverter;
 import uol.treino.person.dto.Location;
 import uol.treino.person.dto.Person;
 import uol.treino.person.repository.entity.PersonRepositoryEntity;
@@ -12,11 +13,14 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
+import static uol.treino.person.converter.PersonConverter.*;
+
 @Component
 public class PersonApplication {
 
     private final PersonRepository personRepository;
     private final LocationApplication locationApplication;
+
 
     public PersonApplication(PersonRepository personRepository, LocationApplication locationApplication) {
         this.personRepository = personRepository;
@@ -24,8 +28,7 @@ public class PersonApplication {
     }
 
     public Person create(Person person, String ip) {
-        PersonRepositoryEntity personRepositoryEntity = new PersonRepositoryEntity();
-        BeanUtils.copyProperties(person, personRepositoryEntity);
+        PersonRepositoryEntity personRepositoryEntity = toPersonRepositoryEntity(person);
         Location location = locationApplication.create(ip);
         person.setLocation(location);
         personRepositoryEntity.setLocationId(location.getId());
@@ -37,7 +40,7 @@ public class PersonApplication {
         if (personRepository.existsById(id)) {
             PersonRepositoryEntity personRepositoryEntity = personRepository.findById(id).get();
             personRepository.save(applyDiff(personRepositoryEntity, person));
-            BeanUtils.copyProperties(personRepositoryEntity, person);
+            person = toPerson(personRepositoryEntity);
             person.setLocation(locationApplication.getById(personRepositoryEntity.getLocationId()));
             return person;
         }
@@ -48,8 +51,7 @@ public class PersonApplication {
         Optional<PersonRepositoryEntity> optionalPersonEntity = personRepository.findById(id);
         if (optionalPersonEntity.isPresent()) {
             PersonRepositoryEntity personRepositoryEntity = optionalPersonEntity.get();
-            Person person = new Person();
-            BeanUtils.copyProperties(personRepositoryEntity, person);
+            Person person = toPerson(personRepositoryEntity);
             person.setLocation(locationApplication.getById(personRepositoryEntity.getLocationId()));
             return person;
         }
@@ -60,8 +62,7 @@ public class PersonApplication {
         Iterable<PersonRepositoryEntity> personEntities = personRepository.findAll();
         List<Person> persons = new LinkedList<>();
         personEntities.forEach(personRepositoryEntity -> {
-            Person person = new Person();
-            BeanUtils.copyProperties(personRepositoryEntity, person);
+            Person person = toPerson(personRepositoryEntity);
             person.setLocation(locationApplication.getById(personRepositoryEntity.getLocationId()));
             persons.add(person);
         });
