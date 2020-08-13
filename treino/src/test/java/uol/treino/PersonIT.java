@@ -9,7 +9,7 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.*;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
-import uol.treino.person.objects.Person;
+import uol.treino.person.dto.Person;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

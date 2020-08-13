@@ -1,4 +1,4 @@
-package uol.treino.person.objects;
+package uol.treino.person.dto;
 
 public class Person {
     private Long id;

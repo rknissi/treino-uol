@@ -4,9 +4,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
-import uol.treino.person.gateway.objects.LocationGatewayResponse;
-import uol.treino.person.objects.Location;
-import uol.treino.person.objects.Weather;
+import uol.treino.person.gateway.response.LocationGatewayResponse;
+import uol.treino.person.dto.Location;
+import uol.treino.person.dto.Weather;
 
 @Configuration
 public class LocationGateway {

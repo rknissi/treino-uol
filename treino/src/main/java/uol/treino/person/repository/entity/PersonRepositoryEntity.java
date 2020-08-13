@@ -1,4 +1,4 @@
-package uol.treino.person.repository.objects;
+package uol.treino.person.repository.entity;
 
 
 import javax.persistence.*;

@@ -1,4 +1,4 @@
-package uol.treino.person.gateway.objects;
+package uol.treino.person.gateway.response;
 
 public class LocationGatewayResponse {
     private Long id;

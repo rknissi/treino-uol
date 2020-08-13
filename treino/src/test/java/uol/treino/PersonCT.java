@@ -12,9 +12,9 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import uol.treino.person.application.PersonApplication;
-import uol.treino.person.objects.Person;
+import uol.treino.person.dto.Person;
 import uol.treino.person.repository.PersonRepository;
-import uol.treino.person.repository.objects.PersonRepositoryEntity;
+import uol.treino.person.repository.entity.PersonRepositoryEntity;
 
 import static org.springframework.test.annotation.DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD;
 

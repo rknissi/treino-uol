@@ -3,9 +3,9 @@ package uol.treino.person.application;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
-import uol.treino.person.objects.Location;
-import uol.treino.person.objects.Person;
-import uol.treino.person.repository.objects.PersonRepositoryEntity;
+import uol.treino.person.dto.Location;
+import uol.treino.person.dto.Person;
+import uol.treino.person.repository.entity.PersonRepositoryEntity;
 import uol.treino.person.repository.PersonRepository;
 
 import java.util.LinkedList;
