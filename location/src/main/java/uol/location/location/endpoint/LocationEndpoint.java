@@ -1,13 +1,17 @@
 package uol.location.location.endpoint;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 import uol.location.location.application.LocationApplication;
-import uol.location.location.endpoint.resource.LocationEnpointBody;
+import uol.location.location.converter.LocationConverter;
+import uol.location.location.converter.WeatherConverter;
+import uol.location.location.endpoint.resource.LocationEndpointBody;
 import uol.location.location.dto.Location;
+
+import static uol.location.location.converter.LocationConverter.*;
+import static uol.location.location.converter.WeatherConverter.*;
 
 @RestController
 public class LocationEndpoint {
@@ -22,10 +26,9 @@ public class LocationEndpoint {
     ResponseEntity getById(@PathVariable(value="id") Long id) {
         Location location = locationApplication.getById(id);
         if (!ObjectUtils.isEmpty(location)) {
-            LocationEnpointBody locationEnpointBody = new LocationEnpointBody();
-            BeanUtils.copyProperties(location, locationEnpointBody);
-            BeanUtils.copyProperties(location.getWeather(), locationEnpointBody.getWeather());
-            return ResponseEntity.status(HttpStatus.OK).body(locationEnpointBody);
+            LocationEndpointBody locationEndpointBody = toLocationEndpointBody(location);
+            locationEndpointBody.setWeather(toWeatherEndpointBody(location.getWeather()));
+            return ResponseEntity.status(HttpStatus.OK).body(locationEndpointBody);
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
@@ -33,12 +36,11 @@ public class LocationEndpoint {
     @PostMapping("/locations")
     ResponseEntity create(@RequestBody String ip) {
         Location location = locationApplication.create(ip);
-        LocationEnpointBody locationEnpointBody = new LocationEnpointBody();
-        BeanUtils.copyProperties(location, locationEnpointBody);
-        BeanUtils.copyProperties(location.getWeather(), locationEnpointBody.getWeather());
+        LocationEndpointBody locationEndpointBody = toLocationEndpointBody(location);
+        locationEndpointBody.setWeather(toWeatherEndpointBody(location.getWeather()));
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(locationEnpointBody);
+                .body(locationEndpointBody);
     }
 
     @DeleteMapping("/locations/{id}")

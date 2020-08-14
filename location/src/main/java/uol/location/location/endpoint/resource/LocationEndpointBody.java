@@ -5,9 +5,9 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import java.io.Serializable;
 
 @JsonRootName(value = "data")
-public class LocationEnpointBody implements  Serializable{
+public class LocationEndpointBody implements  Serializable{
 
-    public LocationEnpointBody() {
+    public LocationEndpointBody() {
         this.setWeather(new WeatherEndpointBody());
     }
 

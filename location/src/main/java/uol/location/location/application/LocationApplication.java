@@ -1,16 +1,19 @@
 package uol.location.location.application;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import uol.location.location.converter.LocationConverter;
+import uol.location.location.converter.WeatherConverter;
 import uol.location.location.gateway.LocationGateway;
 import uol.location.location.dto.Location;
 import uol.location.location.dto.Weather;
 import uol.location.location.queue.LocationCreationProducerApplication;
 import uol.location.location.repository.entity.LocationRepositoryEntity;
 import uol.location.location.repository.LocationRepository;
-import uol.location.location.repository.entity.WeatherRepositoryEntity;
 
 import java.util.Optional;
+
+import static uol.location.location.converter.LocationConverter.*;
+import static uol.location.location.converter.WeatherConverter.*;
 
 @Service
 public class LocationApplication {
@@ -28,29 +31,21 @@ public class LocationApplication {
 	}
 
 	public Location create(String ipv4) {
-	    Location location = new Location();
 		LocationRepositoryEntity locationRepositoryEntity = new LocationRepositoryEntity();
 		locationRepository.save(locationRepositoryEntity);
 		locationCreationProducerApplication.sendMessage(ipv4, locationRepositoryEntity.getId());
-		BeanUtils.copyProperties(locationRepositoryEntity, location);
-		return location;
+		return toLocation(locationRepositoryEntity);
 	}
 
 	public void populateData(String ipv4, Long id) {
-	    LocationRepositoryEntity locationRepositoryEntity = new LocationRepositoryEntity();
-	    locationRepositoryEntity.setId(id);
-
 		Location location = locationGateway.getGeographicalLocation(ipv4);
-		BeanUtils.copyProperties(location, locationRepositoryEntity);
+		LocationRepositoryEntity locationRepositoryEntity = toLocationRepositoryEntity(location);
 		locationRepositoryEntity.setId(id);
 
 		Weather weather = weatherApplication.getWeatherFromLatLog(location.getLatitude(), location.getLongitude());
 		weather.setId(null);
-		WeatherRepositoryEntity weatherRepositoryEntity = new WeatherRepositoryEntity();
-		BeanUtils.copyProperties(weather, weatherRepositoryEntity);
-		locationRepositoryEntity.setWeather(weatherRepositoryEntity);
 
-		location.setWeather(weather);
+		locationRepositoryEntity.setWeather(toWeatherRepositoryEntity(weather));
 
 		locationRepository.save(locationRepositoryEntity);
 	}
@@ -59,10 +54,9 @@ public class LocationApplication {
 	public Location getById(Long id) {
 		Optional<LocationRepositoryEntity> locationEntity = locationRepository.findById(id);
         if (locationEntity.isPresent()) {
-        	Location location = new Location();
-			BeanUtils.copyProperties(locationEntity.get(), location);
+        	Location location = toLocation(locationEntity.get());
 			if (locationEntity.get().getWeather() != null) {
-				BeanUtils.copyProperties(locationEntity.get().getWeather(), location.getWeather());
+			    location.setWeather(toWeather(locationEntity.get().getWeather()));
 			}
 			return location;
         }
