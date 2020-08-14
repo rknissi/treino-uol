@@ -15,19 +15,14 @@ public class LocationGateway {
     @Value("${url.location}")
     String locationUrl;
 
-    public Location getById(Long id) {
+    public LocationGatewayResponse getById(Long id) {
         RestTemplate restTemplate = new RestTemplate();
-        LocationGatewayResponse locationGatewayResponse = restTemplate.getForObject( locationUrl + id, LocationGatewayResponse.class);
-
-        Location location = toLocation(locationGatewayResponse);
-        return location;
+        return restTemplate.getForObject( locationUrl + id, LocationGatewayResponse.class);
     }
 
-    public Location create(String ip) {
+    public LocationGatewayResponse create(String ip) {
         RestTemplate restTemplate = new RestTemplate();
-        LocationGatewayResponse locationGatewayResponse = restTemplate.postForObject(locationUrl, ip, LocationGatewayResponse.class);
-        Location location = toLocation(locationGatewayResponse);
-        return location;
+        return restTemplate.postForObject(locationUrl, ip, LocationGatewayResponse.class);
     }
 
     public void delete(Long id) {
