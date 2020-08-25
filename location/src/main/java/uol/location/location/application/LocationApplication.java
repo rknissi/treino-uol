@@ -5,7 +5,6 @@ import uol.location.location.gateway.LocationGateway;
 import uol.location.location.domain.Location;
 import uol.location.location.domain.Weather;
 import uol.location.location.queue.LocationCreationMessage;
-import uol.location.location.queue.LocationCreationProducerApplication;
 import uol.location.location.repository.entity.LocationRepositoryEntity;
 import uol.location.location.repository.LocationRepository;
 
@@ -18,13 +17,11 @@ import static uol.location.location.converter.WeatherConverter.*;
 public class LocationApplication {
 
 	private final LocationRepository locationRepository;
-	private final LocationCreationProducerApplication locationCreationProducerApplication;
 	private final LocationGateway locationGateway;
 	private final WeatherApplication weatherApplication;
 
-	public LocationApplication(LocationRepository locationRepository, LocationCreationProducerApplication locationCreationProducerApplication, LocationGateway locationGateway, WeatherApplication weatherApplication) {
+	public LocationApplication(LocationRepository locationRepository, LocationGateway locationGateway, WeatherApplication weatherApplication) {
 		this.locationRepository = locationRepository;
-		this.locationCreationProducerApplication = locationCreationProducerApplication;
 		this.locationGateway = locationGateway;
 		this.weatherApplication = weatherApplication;
 	}
