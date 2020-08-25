@@ -15,6 +15,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import uol.location.location.application.LocationApplication;
 import uol.location.location.domain.Location;
+import uol.location.location.queue.LocationCreationMessage;
 import uol.location.location.repository.LocationRepository;
 import uol.location.location.repository.entity.LocationRepositoryEntity;
 import uol.location.location.repository.entity.WeatherRepositoryEntity;
@@ -48,41 +49,30 @@ public class LocationCT {
         broker.startup(brokerOptions);
 
 
-        addLocation(1L, "Brazil", "São Paulo", 1L, 20L, 10L);
+        addLocation(1L, "Brazil", "São Paulo", 20L, 10L);
+        addLocation(2L, "Brazil", "São Paulo", 20L, 10L);
     }
 
-    //@Test
-    //public void createLocationCT() {
-    //    Location location = locationApplication.create("127.0.0.1");
+    @Test
+    public void createLocationCT() throws InterruptedException {
+        LocationCreationMessage locationCreationMessage = new LocationCreationMessage();
+        locationCreationMessage.setId(3L);
+        locationCreationMessage.setIp("127.0.0.1");
+        locationApplication.populateData(locationCreationMessage);
 
-    //    Assert.assertEquals("2", location.getId().toString());
-    //    Assert.assertNull(location.getCountry());
-    //    Assert.assertNull(location.getCity());
-    //    Assert.assertNull(location.getWeather().getId());
-    //    Assert.assertNull(location.getWeather().getMaxTemp());
-    //    Assert.assertNull(location.getWeather().getMinTemp());
-    //}
+        Location location = locationApplication.getById(3L);
 
-    //@Test
-    //public void createLocationAndGetUpdatedLocationCT() throws InterruptedException {
-    //    locationApplication.create("127.0.0.1");
-
-    //    Thread.sleep(3000);
-
-    //    Location location = locationApplication.getById(2L);
-
-    //    Assert.assertEquals("2", location.getId().toString());
-    //    Assert.assertEquals("Brazil", location.getCountry());
-    //    Assert.assertEquals("São Paulo", location.getCity());
-    //    Assert.assertEquals("2", location.getWeather().getId().toString());
-    //    Assert.assertEquals("25", location.getWeather().getMaxTemp().toString());
-    //    Assert.assertEquals("14", location.getWeather().getMinTemp().toString());
-
-    //}
+        Assert.assertEquals("3", location.getId().toString());
+        Assert.assertEquals("Brazil", location.getCountry());
+        Assert.assertEquals("São Paulo", location.getCity());
+        Assert.assertEquals("3", location.getWeather().getId().toString());
+        Assert.assertEquals("25", location.getWeather().getMaxTemp().toString());
+        Assert.assertEquals("14", location.getWeather().getMinTemp().toString());
+    }
 
     @Test
     public void deleteLocationById() {
-        addLocation(2L, "Teste", "Teste2", 2L, 10L, 5L);
+        addLocation(1L, "Teste", "Teste2", 10L, 5L);
         Boolean aBoolean = locationApplication.deleteById(2L);
 
         Assert.assertEquals(true, aBoolean);
@@ -91,25 +81,24 @@ public class LocationCT {
 
     @Test
     public void getLocationByIdCT() {
-        Location location = locationApplication.getById(1L);
+        Location location = locationApplication.getById(2L);
 
-        Assert.assertEquals("1", location.getId().toString());
+        Assert.assertEquals("2", location.getId().toString());
         Assert.assertEquals("Brazil", location.getCountry());
         Assert.assertEquals("São Paulo", location.getCity());
-        Assert.assertEquals("1", location.getWeather().getId().toString());
+        Assert.assertEquals("2", location.getWeather().getId().toString());
         Assert.assertEquals("20", location.getWeather().getMaxTemp().toString());
         Assert.assertEquals("10", location.getWeather().getMinTemp().toString());
     }
 
-    private void addLocation(Long id, String country, String city, Long weatherId, Long maxTemp, Long minTemp) {
+    private void addLocation(Long personId, String country, String city, Long maxTemp, Long minTemp) {
         LocationRepositoryEntity locationRepositoryEntity = new LocationRepositoryEntity();
 
-        locationRepositoryEntity.setId(id);
+        locationRepositoryEntity.setPersonId(personId);
         locationRepositoryEntity.setCountry(country);
         locationRepositoryEntity.setCity(city);
 
         WeatherRepositoryEntity weatherRepositoryEntity = new WeatherRepositoryEntity();
-        weatherRepositoryEntity.setId(weatherId);
         weatherRepositoryEntity.setMaxTemp(maxTemp);
         weatherRepositoryEntity.setMinTemp(minTemp);
 
