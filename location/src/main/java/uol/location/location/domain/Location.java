@@ -35,6 +35,8 @@ public class Location implements  Serializable{
 
     private Weather weather;
 
+    private Long personId;
+
     public String getContinent() {
         return continent;
     }
@@ -105,6 +107,14 @@ public class Location implements  Serializable{
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getPersonId() {
+        return personId;
+    }
+
+    public void setPersonId(Long personId) {
+        this.personId = personId;
     }
 }
 

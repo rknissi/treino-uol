@@ -12,7 +12,6 @@ public class PersonRepositoryEntity {
 
     private String name;
     private Integer age;
-    private Long locationId;
 
     public PersonRepositoryEntity()
     {
@@ -45,13 +44,5 @@ public class PersonRepositoryEntity {
 
     public void setAge(Integer age) {
         this.age = age;
-    }
-
-    public Long getLocationId() {
-        return locationId;
-    }
-
-    public void setLocationId(Long locationId) {
-        this.locationId = locationId;
     }
 }

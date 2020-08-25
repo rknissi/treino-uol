@@ -1,4 +1,4 @@
-package uol.treino.person.dto;
+package uol.treino.person.domain;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 

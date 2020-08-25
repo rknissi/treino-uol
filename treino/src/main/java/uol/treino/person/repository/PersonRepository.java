@@ -6,4 +6,6 @@ import uol.treino.person.repository.entity.PersonRepositoryEntity;
 
 @Repository
 public interface PersonRepository extends CrudRepository<PersonRepositoryEntity, Long> {
+
+
 }

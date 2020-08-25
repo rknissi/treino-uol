@@ -2,7 +2,7 @@ package uol.treino.person.application;
 
 import org.springframework.stereotype.Component;
 import uol.treino.person.gateway.LocationGateway;
-import uol.treino.person.dto.Location;
+import uol.treino.person.domain.Location;
 import uol.treino.person.gateway.response.LocationGatewayResponse;
 
 import static uol.treino.person.converter.LocationConverter.toLocation;
@@ -18,11 +18,6 @@ public class LocationApplication {
 
     public Location getById(Long id) {
         LocationGatewayResponse locationGatewayResponse =  locationGateway.getById(id);
-        return toLocation(locationGatewayResponse);
-    }
-
-    public Location create(String ip) {
-        LocationGatewayResponse locationGatewayResponse =  locationGateway.create(ip);
         return toLocation(locationGatewayResponse);
     }
 

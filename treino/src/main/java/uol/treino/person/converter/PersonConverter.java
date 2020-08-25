@@ -1,6 +1,6 @@
 package uol.treino.person.converter;
 
-import uol.treino.person.dto.Person;
+import uol.treino.person.domain.Person;
 import uol.treino.person.repository.entity.PersonRepositoryEntity;
 
 public class PersonConverter {

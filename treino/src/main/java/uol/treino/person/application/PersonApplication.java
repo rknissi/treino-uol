@@ -1,11 +1,9 @@
 package uol.treino.person.application;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
-import uol.treino.person.converter.PersonConverter;
-import uol.treino.person.dto.Location;
-import uol.treino.person.dto.Person;
+import uol.treino.person.domain.Person;
+import uol.treino.person.queue.LocationCreationProducerApplication;
 import uol.treino.person.repository.entity.PersonRepositoryEntity;
 import uol.treino.person.repository.PersonRepository;
 
@@ -20,19 +18,21 @@ public class PersonApplication {
 
     private final PersonRepository personRepository;
     private final LocationApplication locationApplication;
+    private final LocationCreationProducerApplication locationCreationProducerApplication;
 
 
-    public PersonApplication(PersonRepository personRepository, LocationApplication locationApplication) {
+    public PersonApplication(PersonRepository personRepository, LocationApplication locationApplication, LocationCreationProducerApplication locationCreationProducerApplication) {
         this.personRepository = personRepository;
         this.locationApplication = locationApplication;
+        this.locationCreationProducerApplication = locationCreationProducerApplication;
     }
 
     public Person create(Person person, String ip) {
         PersonRepositoryEntity personRepositoryEntity = toPersonRepositoryEntity(person);
-        Location location = locationApplication.create(ip);
-        person.setLocation(location);
-        personRepositoryEntity.setLocationId(location.getId());
         person.setId(personRepository.save(personRepositoryEntity).getId());
+
+        locationCreationProducerApplication.sendMessage(ip, person.getId());
+
         return person;
     }
 
@@ -41,7 +41,7 @@ public class PersonApplication {
             PersonRepositoryEntity personRepositoryEntity = personRepository.findById(id).get();
             personRepository.save(applyDiff(personRepositoryEntity, person));
             person = toPerson(personRepositoryEntity);
-            person.setLocation(locationApplication.getById(personRepositoryEntity.getLocationId()));
+            person.setLocation(locationApplication.getById(personRepositoryEntity.getId()));
             return person;
         }
         return null;
@@ -52,7 +52,7 @@ public class PersonApplication {
         if (optionalPersonEntity.isPresent()) {
             PersonRepositoryEntity personRepositoryEntity = optionalPersonEntity.get();
             Person person = toPerson(personRepositoryEntity);
-            person.setLocation(locationApplication.getById(personRepositoryEntity.getLocationId()));
+            person.setLocation(locationApplication.getById(personRepositoryEntity.getId()));
             return person;
         }
         return null;
@@ -63,7 +63,7 @@ public class PersonApplication {
         List<Person> persons = new LinkedList<>();
         personEntities.forEach(personRepositoryEntity -> {
             Person person = toPerson(personRepositoryEntity);
-            person.setLocation(locationApplication.getById(personRepositoryEntity.getLocationId()));
+            person.setLocation(locationApplication.getById(personRepositoryEntity.getId()));
             persons.add(person);
         });
         return persons;
@@ -73,7 +73,7 @@ public class PersonApplication {
         Optional<PersonRepositoryEntity> personEntity = personRepository.findById(id);
         if (personEntity.isPresent()) {
             personRepository.deleteById(id);
-            locationApplication.deleteByid(personEntity.get().getLocationId());
+            locationApplication.deleteByid(personEntity.get().getId());
             return true;
         }
         return false;

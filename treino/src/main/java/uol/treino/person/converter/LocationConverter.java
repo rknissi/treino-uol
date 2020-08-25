@@ -1,7 +1,7 @@
 package uol.treino.person.converter;
 
-import uol.treino.person.dto.Location;
-import uol.treino.person.dto.Weather;
+import uol.treino.person.domain.Location;
+import uol.treino.person.domain.Weather;
 import uol.treino.person.gateway.response.LocationGatewayResponse;
 import uol.treino.person.gateway.response.WeatherGatewayResponse;
 
