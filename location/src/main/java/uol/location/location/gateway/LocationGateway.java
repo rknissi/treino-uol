@@ -3,7 +3,7 @@ package uol.location.location.gateway;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
-import uol.location.location.dto.Location;
+import uol.location.location.domain.Location;
 import uol.location.location.gateway.response.LocationGatewayResponse;
 
 @Configuration

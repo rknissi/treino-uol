@@ -1,10 +1,14 @@
 package uol.location.location.queue;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.amqp.core.Message;
+import org.springframework.amqp.core.MessageBuilder;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.amqp.utils.SerializationUtils;
 import org.springframework.stereotype.Component;
 import uol.location.location.application.LocationApplication;
-import uol.location.location.repository.entity.LocationRepositoryEntity;
 
 @Component
 @RabbitListener(queues = "location-creation")
@@ -16,10 +20,9 @@ public class LocationCreationConsumerApplication {
     }
 
     @RabbitHandler
-    public void receive(LocationCreationMessage locationCreationMessage) {
-        LocationRepositoryEntity locationRepositoryEntity = new LocationRepositoryEntity();
-        locationRepositoryEntity.setId(locationCreationMessage.getId());
-        locationApplication.populateData(locationCreationMessage.getIp(), locationCreationMessage.getId());
+    public void receive(String value) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        LocationCreationMessage locationCreationMessage = objectMapper.readValue(value, LocationCreationMessage.class);
+        locationApplication.populateData(locationCreationMessage);
     }
-
 }

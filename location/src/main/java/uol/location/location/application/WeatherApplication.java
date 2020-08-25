@@ -1,7 +1,7 @@
 package uol.location.location.application;
 
 import org.springframework.stereotype.Component;
-import uol.location.location.dto.Weather;
+import uol.location.location.domain.Weather;
 import uol.location.location.gateway.WeatherGateway;
 
 @Component

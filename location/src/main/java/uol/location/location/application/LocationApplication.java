@@ -1,11 +1,10 @@
 package uol.location.location.application;
 
 import org.springframework.stereotype.Service;
-import uol.location.location.converter.LocationConverter;
-import uol.location.location.converter.WeatherConverter;
 import uol.location.location.gateway.LocationGateway;
-import uol.location.location.dto.Location;
-import uol.location.location.dto.Weather;
+import uol.location.location.domain.Location;
+import uol.location.location.domain.Weather;
+import uol.location.location.queue.LocationCreationMessage;
 import uol.location.location.queue.LocationCreationProducerApplication;
 import uol.location.location.repository.entity.LocationRepositoryEntity;
 import uol.location.location.repository.LocationRepository;
@@ -30,17 +29,10 @@ public class LocationApplication {
 		this.weatherApplication = weatherApplication;
 	}
 
-	public Location create(String ipv4) {
-		LocationRepositoryEntity locationRepositoryEntity = new LocationRepositoryEntity();
-		locationRepository.save(locationRepositoryEntity);
-		locationCreationProducerApplication.sendMessage(ipv4, locationRepositoryEntity.getId());
-		return toLocation(locationRepositoryEntity);
-	}
-
-	public void populateData(String ipv4, Long id) {
-		Location location = locationGateway.getGeographicalLocation(ipv4);
+	public void populateData(LocationCreationMessage locationCreationMessage) {
+		Location location = locationGateway.getGeographicalLocation(locationCreationMessage.getIp());
 		LocationRepositoryEntity locationRepositoryEntity = toLocationRepositoryEntity(location);
-		locationRepositoryEntity.setId(id);
+		locationRepositoryEntity.setPersonId(locationCreationMessage.getId());
 
 		Weather weather = weatherApplication.getWeatherFromLatLog(location.getLatitude(), location.getLongitude());
 		weather.setId(null);
@@ -52,7 +44,7 @@ public class LocationApplication {
 
 
 	public Location getById(Long id) {
-		Optional<LocationRepositoryEntity> locationEntity = locationRepository.findById(id);
+		Optional<LocationRepositoryEntity> locationEntity = locationRepository.findByPersonId(id);
         if (locationEntity.isPresent()) {
         	Location location = toLocation(locationEntity.get());
 			if (locationEntity.get().getWeather() != null) {
@@ -64,7 +56,7 @@ public class LocationApplication {
     }
 
 	public boolean deleteById(Long id) {
-		Optional<LocationRepositoryEntity> locationEntity = locationRepository.findById(id);
+		Optional<LocationRepositoryEntity> locationEntity = locationRepository.findByPersonId(id);
 		if (locationEntity.isPresent()) {
 		    locationRepository.deleteById(id);
 			return true;

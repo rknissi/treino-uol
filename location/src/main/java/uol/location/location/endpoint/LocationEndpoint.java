@@ -5,10 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 import uol.location.location.application.LocationApplication;
-import uol.location.location.converter.LocationConverter;
-import uol.location.location.converter.WeatherConverter;
 import uol.location.location.endpoint.resource.LocationEndpointBody;
-import uol.location.location.dto.Location;
+import uol.location.location.domain.Location;
 
 import static uol.location.location.converter.LocationConverter.*;
 import static uol.location.location.converter.WeatherConverter.*;
@@ -33,15 +31,15 @@ public class LocationEndpoint {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
-    @PostMapping("/locations")
-    ResponseEntity create(@RequestBody String ip) {
-        Location location = locationApplication.create(ip);
-        LocationEndpointBody locationEndpointBody = toLocationEndpointBody(location);
-        locationEndpointBody.setWeather(toWeatherEndpointBody(location.getWeather()));
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(locationEndpointBody);
-    }
+    //@PostMapping("/locations")
+    //ResponseEntity create(@RequestBody String ip) {
+    //    Location location = locationApplication.create(ip);
+    //    LocationEndpointBody locationEndpointBody = toLocationEndpointBody(location);
+    //    locationEndpointBody.setWeather(toWeatherEndpointBody(location.getWeather()));
+    //    return ResponseEntity
+    //            .status(HttpStatus.CREATED)
+    //            .body(locationEndpointBody);
+    //}
 
     @DeleteMapping("/locations/{id}")
     ResponseEntity deleteById(@PathVariable(value="id") Long id) {

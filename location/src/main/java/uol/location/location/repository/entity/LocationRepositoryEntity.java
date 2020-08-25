@@ -17,6 +17,8 @@ public class LocationRepositoryEntity {
     private String latitude;
     private String longitude;
 
+    private Long personId;
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "weather_id", referencedColumnName = "id")
     private WeatherRepositoryEntity weather;
@@ -91,5 +93,13 @@ public class LocationRepositoryEntity {
 
     public void setWeather(WeatherRepositoryEntity weather) {
         this.weather = weather;
+    }
+
+    public Long getPersonId() {
+        return personId;
+    }
+
+    public void setPersonId(Long personId) {
+        this.personId = personId;
     }
 }

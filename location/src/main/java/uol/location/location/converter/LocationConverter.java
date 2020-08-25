@@ -1,6 +1,6 @@
 package uol.location.location.converter;
 
-import uol.location.location.dto.Location;
+import uol.location.location.domain.Location;
 import uol.location.location.endpoint.resource.LocationEndpointBody;
 import uol.location.location.repository.entity.LocationRepositoryEntity;
 
@@ -17,6 +17,7 @@ public class LocationConverter {
         location.setCity(locationRepositoryEntity.getCity());
         location.setLatitude(locationRepositoryEntity.getLatitude());
         location.setLongitude(locationRepositoryEntity.getLongitude());
+        location.setPersonId(locationRepositoryEntity.getPersonId());
 
         return location;
     }
@@ -32,6 +33,7 @@ public class LocationConverter {
         locationRepositoryEntity.setCity(location.getCity());
         locationRepositoryEntity.setLatitude(location.getLatitude());
         locationRepositoryEntity.setLongitude(location.getLongitude());
+        locationRepositoryEntity.setPersonId(location.getPersonId());
 
         return locationRepositoryEntity;
     }

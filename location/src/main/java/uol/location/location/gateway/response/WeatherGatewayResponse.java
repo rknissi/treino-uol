@@ -1,7 +1,7 @@
 package uol.location.location.gateway.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import uol.location.location.dto.Weather;
+import uol.location.location.domain.Weather;
 
 import java.util.List;
 

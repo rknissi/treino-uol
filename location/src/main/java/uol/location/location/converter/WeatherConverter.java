@@ -1,6 +1,6 @@
 package uol.location.location.converter;
 
-import uol.location.location.dto.Weather;
+import uol.location.location.domain.Weather;
 import uol.location.location.endpoint.resource.WeatherEndpointBody;
 import uol.location.location.repository.entity.WeatherRepositoryEntity;
 
