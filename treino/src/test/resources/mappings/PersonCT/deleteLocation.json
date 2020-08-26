@@ -1,7 +1,7 @@
 {
   "request": {
     "method": "DELETE",
-    "url": "/locations/3"
+    "url": "/locations/2"
   },
   "response": {
     "status": 200,
