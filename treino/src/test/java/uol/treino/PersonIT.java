@@ -1,5 +1,8 @@
 package uol.treino;
 
+import com.fasterxml.jackson.databind.DeserializationConfig;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,17 +17,17 @@ import uol.treino.person.domain.Person;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class PersonIT {
 
     @LocalServerPort
-    private int port;
+    private int port = 8080;
 
     TestRestTemplate restTemplate = new TestRestTemplate();
 
     HttpHeaders headers = new HttpHeaders();
+
+    ObjectMapper objectMapper = new ObjectMapper();
 
     @Test
     public void returnCreatedIfCreatedPersonSuccessfullyIT() throws Exception {
@@ -39,46 +42,52 @@ public class PersonIT {
 
     @Test
     public void returnOkWhenSuccessfullyFindingUserByIdIT() throws Exception {
-        createPerson("Teste", 18);
+        ResponseEntity<String> response =  createPerson("Teste", 18);
+
+        Person person = objectMapper.readValue(response.getBody(), Person.class);
+
         HttpEntity<Person> entity = new HttpEntity<>(null , headers);
 
-        ResponseEntity<String> response = restTemplate.exchange(
-                createURLWithPort("/persons/1"), HttpMethod.GET, entity, String.class);
+        ResponseEntity<String> getResponse = restTemplate.exchange(
+                createURLWithPort("/persons/" + person.getId()), HttpMethod.GET, entity, String.class);
 
-        JSONObject jsonObject = new JSONObject(response.getBody());
+        JSONObject jsonObject = new JSONObject(getResponse.getBody());
 
-        assertTrue(response.getStatusCode() == HttpStatus.OK);
+        assertTrue(getResponse.getStatusCode() == HttpStatus.OK);
         assertEquals(jsonObject.get("name"), "Teste");
         assertEquals(jsonObject.get("age"), 18);
     }
 
     @Test
     public void returnOkWhenDeletedPersonSuccessfullyIT() throws Exception {
-        createPerson("TesteDeleted", 21);
+        ResponseEntity<String> response =  createPerson("TesteDeleted", 21);
+        Person person = objectMapper.readValue(response.getBody(), Person.class);
+
         HttpEntity<Person> entity = new HttpEntity<>(null , headers);
 
-        ResponseEntity<String> response = restTemplate.exchange(
-                createURLWithPort("/persons/1"), HttpMethod.DELETE, entity, String.class);
+        ResponseEntity<String> deleteResponse = restTemplate.exchange(
+                createURLWithPort("/persons/" + person.getId()), HttpMethod.DELETE, entity, String.class);
 
-        assertTrue(response.getStatusCode() == HttpStatus.OK);
+        assertTrue(deleteResponse.getStatusCode() == HttpStatus.OK);
     }
 
     @Test
     public void returnOkWhenPatchNewDataIT() throws Exception {
-        createPerson("Teste", 18);
+        ResponseEntity<String> response = createPerson("Teste", 18);
+        Person person = objectMapper.readValue(response.getBody(), Person.class);
 
-        Person person = new Person();
-        person.setName("TestePatch");
-        person.setAge(17);
+        Person newPerson = new Person();
+        newPerson.setName("TestePatch");
+        newPerson.setAge(17);
 
-        HttpEntity<Person> entity = new HttpEntity<>(person , headers);
+        HttpEntity<Person> entity = new HttpEntity<>(newPerson , headers);
 
-        ResponseEntity<String> response = restTemplate.exchange(
-                createURLWithPort("/persons/1"), HttpMethod.PATCH, entity, String.class);
+        ResponseEntity<String> patchResponse = restTemplate.exchange(
+                createURLWithPort("/persons/" + person.getId()), HttpMethod.PATCH, entity, String.class);
 
-        JSONObject jsonObject = new JSONObject(response.getBody());
+        JSONObject jsonObject = new JSONObject(patchResponse.getBody());
 
-        assertTrue(response.getStatusCode() == HttpStatus.OK);
+        assertTrue(patchResponse.getStatusCode() == HttpStatus.OK);
         assertEquals(jsonObject.get("name"), "TestePatch");
         assertEquals(jsonObject.get("age"), 17);
     }
@@ -88,7 +97,7 @@ public class PersonIT {
         HttpEntity<Person> entity = new HttpEntity<>(null , headers);
 
         ResponseEntity<String> response = restTemplate.exchange(
-                createURLWithPort("/persons/1"), HttpMethod.GET, entity, String.class);
+                createURLWithPort("/persons/0"), HttpMethod.GET, entity, String.class);
 
         assertTrue(response.getStatusCode() == HttpStatus.NOT_FOUND);
     }

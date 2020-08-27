@@ -18,7 +18,10 @@ public class LocationApplication {
 
     public Location getById(Long id) {
         LocationGatewayResponse locationGatewayResponse =  locationGateway.getById(id);
-        return toLocation(locationGatewayResponse);
+        if (locationGatewayResponse != null) {
+            return toLocation(locationGatewayResponse);
+        }
+        return null;
     }
 
     public void deleteByid(Long id) {

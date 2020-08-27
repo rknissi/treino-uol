@@ -6,6 +6,17 @@ public class Person {
     private Integer age;
     private Location location;
 
+    public Person(){
+
+    }
+
+    public Person (Long id, String name, Integer age, Location location) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.location = location;
+    }
+
     public String getName() {
         return name;
     }
