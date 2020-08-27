@@ -19,9 +19,16 @@ public class LocationRepositoryEntity {
 
     private Long personId;
 
+    private boolean valid;
+
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "weather_id", referencedColumnName = "id")
     private WeatherRepositoryEntity weather;
+
+    public LocationRepositoryEntity() {
+        this.valid = true;
+    }
 
     public Long getId() {
         return id;
@@ -101,5 +108,13 @@ public class LocationRepositoryEntity {
 
     public void setPersonId(Long personId) {
         this.personId = personId;
+    }
+
+    public boolean isValid() {
+        return valid;
+    }
+
+    public void setValid(boolean valid) {
+        this.valid = valid;
     }
 }

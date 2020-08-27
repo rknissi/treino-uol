@@ -31,16 +31,6 @@ public class LocationEndpoint {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
-    //@PostMapping("/locations")
-    //ResponseEntity create(@RequestBody String ip) {
-    //    Location location = locationApplication.create(ip);
-    //    LocationEndpointBody locationEndpointBody = toLocationEndpointBody(location);
-    //    locationEndpointBody.setWeather(toWeatherEndpointBody(location.getWeather()));
-    //    return ResponseEntity
-    //            .status(HttpStatus.CREATED)
-    //            .body(locationEndpointBody);
-    //}
-
     @DeleteMapping("/locations/{id}")
     ResponseEntity deleteById(@PathVariable(value="id") Long id) {
         boolean isDeleted = locationApplication.deleteById(id);

@@ -42,7 +42,7 @@ public class LocationApplication {
 
 	public Location getById(Long id) {
 		Optional<LocationRepositoryEntity> locationEntity = locationRepository.findByPersonId(id);
-        if (locationEntity.isPresent()) {
+        if (locationEntity.isPresent() && locationEntity.get().isValid()) {
         	Location location = toLocation(locationEntity.get());
 			if (locationEntity.get().getWeather() != null) {
 			    location.setWeather(toWeather(locationEntity.get().getWeather()));
@@ -55,7 +55,8 @@ public class LocationApplication {
 	public boolean deleteById(Long id) {
 		Optional<LocationRepositoryEntity> locationEntity = locationRepository.findByPersonId(id);
 		if (locationEntity.isPresent()) {
-		    locationRepository.deleteById(id);
+			locationEntity.get().setValid(false);
+			locationRepository.save(locationEntity.get());
 			return true;
 		}
 		return false;
