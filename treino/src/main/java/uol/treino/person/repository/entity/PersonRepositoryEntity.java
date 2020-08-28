@@ -13,8 +13,10 @@ public class PersonRepositoryEntity {
     private String name;
     private Integer age;
 
-    public PersonRepositoryEntity()
-    {
+    private boolean valid;
+
+    public PersonRepositoryEntity() {
+        this.valid = true;
     }
 
     public PersonRepositoryEntity(String name, Integer age) {
@@ -44,5 +46,13 @@ public class PersonRepositoryEntity {
 
     public void setAge(Integer age) {
         this.age = age;
+    }
+
+    public boolean isValid() {
+        return valid;
+    }
+
+    public void setValid(boolean valid) {
+        this.valid = valid;
     }
 }

@@ -10,6 +10,7 @@ import uol.treino.person.repository.PersonRepository;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import static uol.treino.person.converter.PersonConverter.*;
 
@@ -39,17 +40,19 @@ public class PersonApplication {
     public Person patch(Long id, Person person) {
         if (personRepository.existsById(id)) {
             PersonRepositoryEntity personRepositoryEntity = personRepository.findById(id).get();
-            personRepository.save(applyDiff(personRepositoryEntity, person));
-            person = toPerson(personRepositoryEntity);
-            person.setLocation(locationApplication.getById(personRepositoryEntity.getId()));
-            return person;
+            if  (personRepositoryEntity.isValid()) {
+                personRepository.save(applyDiff(personRepositoryEntity, person));
+                person = toPerson(personRepositoryEntity);
+                person.setLocation(locationApplication.getById(personRepositoryEntity.getId()));
+                return person;
+            }
         }
         return null;
     }
 
     public Person getById(Long id) {
         Optional<PersonRepositoryEntity> optionalPersonEntity = personRepository.findById(id);
-        if (optionalPersonEntity.isPresent()) {
+        if (optionalPersonEntity.isPresent() && optionalPersonEntity.get().isValid()) {
             PersonRepositoryEntity personRepositoryEntity = optionalPersonEntity.get();
             Person person = toPerson(personRepositoryEntity);
             person.setLocation(locationApplication.getById(personRepositoryEntity.getId()));
@@ -62,17 +65,20 @@ public class PersonApplication {
         Iterable<PersonRepositoryEntity> personEntities = personRepository.findAll();
         List<Person> persons = new LinkedList<>();
         personEntities.forEach(personRepositoryEntity -> {
-            Person person = toPerson(personRepositoryEntity);
-            person.setLocation(locationApplication.getById(personRepositoryEntity.getId()));
-            persons.add(person);
+            if (personRepositoryEntity.isValid()) {
+                Person person = toPerson(personRepositoryEntity);
+                person.setLocation(locationApplication.getById(personRepositoryEntity.getId()));
+                persons.add(person);
+            }
         });
         return persons;
     }
 
     public boolean delete(Long id) {
         Optional<PersonRepositoryEntity> personEntity = personRepository.findById(id);
-        if (personEntity.isPresent()) {
-            personRepository.deleteById(id);
+        if (personEntity.isPresent() && personEntity.get().isValid()) {
+            personEntity.get().setValid(false);
+            personRepository.save(personEntity.get());
             locationApplication.deleteByid(personEntity.get().getId());
             return true;
         }
