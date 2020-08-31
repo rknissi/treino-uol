@@ -24,14 +24,4 @@ public class LocationGateway {
             throw e;
         }
     }
-
-    public LocationGatewayResponse create(String ip) {
-        RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.postForObject(locationUrl, ip, LocationGatewayResponse.class);
-    }
-
-    public void delete(Long id) {
-        RestTemplate restTemplate = new RestTemplate();
-        restTemplate.delete(locationUrl + id, LocationGatewayResponse.class);
-    }
 }

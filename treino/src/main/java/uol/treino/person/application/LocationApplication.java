@@ -23,8 +23,4 @@ public class LocationApplication {
         }
         return null;
     }
-
-    public void deleteByid(Long id) {
-        locationGateway.delete(id);
-    }
 }
