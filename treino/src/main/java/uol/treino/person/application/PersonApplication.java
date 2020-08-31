@@ -4,13 +4,13 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 import uol.treino.person.domain.Person;
 import uol.treino.person.queue.LocationCreationProducerApplication;
+import uol.treino.person.queue.LocationDeleteProducerApplication;
 import uol.treino.person.repository.entity.PersonRepositoryEntity;
 import uol.treino.person.repository.PersonRepository;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 import static uol.treino.person.converter.PersonConverter.*;
 
@@ -20,12 +20,14 @@ public class PersonApplication {
     private final PersonRepository personRepository;
     private final LocationApplication locationApplication;
     private final LocationCreationProducerApplication locationCreationProducerApplication;
+    private final LocationDeleteProducerApplication locationDeleteProducerApplication;
 
 
-    public PersonApplication(PersonRepository personRepository, LocationApplication locationApplication, LocationCreationProducerApplication locationCreationProducerApplication) {
+    public PersonApplication(PersonRepository personRepository, LocationApplication locationApplication, LocationCreationProducerApplication locationCreationProducerApplication, LocationDeleteProducerApplication locationDeleteProducerApplication) {
         this.personRepository = personRepository;
         this.locationApplication = locationApplication;
         this.locationCreationProducerApplication = locationCreationProducerApplication;
+        this.locationDeleteProducerApplication = locationDeleteProducerApplication;
     }
 
     public Person create(Person person, String ip) {
@@ -79,7 +81,7 @@ public class PersonApplication {
         if (personEntity.isPresent() && personEntity.get().isValid()) {
             personEntity.get().setValid(false);
             personRepository.save(personEntity.get());
-            locationApplication.deleteByid(personEntity.get().getId());
+            locationDeleteProducerApplication.sendMessage(personEntity.get().getId());
             return true;
         }
         return false;

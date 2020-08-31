@@ -6,26 +6,25 @@ import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 @Component
-public class LocationCreationProducerApplication {
+public class LocationDeleteProducerApplication {
 
     private final RabbitTemplate template;
 
-    @Qualifier("location-creation")
+    @Qualifier("location-delete")
     @Autowired
     private Queue queue;
 
-    public LocationCreationProducerApplication(RabbitTemplate template) {
+    public LocationDeleteProducerApplication(RabbitTemplate template) {
         this.template = template;
     }
 
-    public void sendMessage(String ipv4, Long id) {
+    public void sendMessage(Long id) {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            this.template.convertAndSend(queue.getName(), objectMapper.writeValueAsString(new LocationCreationMessage(ipv4, id)));
+            this.template.convertAndSend(queue.getName(), objectMapper.writeValueAsString(id));
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
