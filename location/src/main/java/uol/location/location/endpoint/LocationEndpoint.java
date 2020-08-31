@@ -30,14 +30,4 @@ public class LocationEndpoint {
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
-
-    @DeleteMapping("/locations/{id}")
-    ResponseEntity deleteById(@PathVariable(value="id") Long id) {
-        boolean isDeleted = locationApplication.deleteById(id);
-        if (isDeleted) {
-            return ResponseEntity.status(HttpStatus.OK).build();
-        }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-    }
-
 }
