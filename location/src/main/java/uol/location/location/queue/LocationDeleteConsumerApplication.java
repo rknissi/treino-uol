@@ -8,18 +8,18 @@ import org.springframework.stereotype.Component;
 import uol.location.location.application.LocationApplication;
 
 @Component
-@RabbitListener(queues = "location-creation")
-public class LocationCreationConsumerApplication {
+@RabbitListener(queues = "location-delete")
+public class LocationDeleteConsumerApplication {
     private final LocationApplication locationApplication;
 
-    public LocationCreationConsumerApplication(LocationApplication locationApplication){
+    public LocationDeleteConsumerApplication(LocationApplication locationApplication){
         this.locationApplication = locationApplication;
     }
 
     @RabbitHandler
     public void receive(String value) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
-        LocationCreationMessage locationCreationMessage = objectMapper.readValue(value, LocationCreationMessage.class);
-        locationApplication.populateData(locationCreationMessage);
+        Long id = objectMapper.readValue(value, Long.class);
+        locationApplication.deleteById(id);
     }
 }

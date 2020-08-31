@@ -11,4 +11,9 @@ public class LocationCreationQueueConfiguration {
     public Queue createLocationCreationQueue() {
         return new Queue("location-creation");
     }
+
+    @Bean
+    public Queue deleteLocationCreationQueue() {
+        return new Queue("location-delete");
+    }
 }
