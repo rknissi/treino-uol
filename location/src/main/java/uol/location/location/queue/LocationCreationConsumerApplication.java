@@ -24,9 +24,7 @@ public class LocationCreationConsumerApplication {
         LocationCreationMessage locationCreationMessage = objectMapper.readValue(value, LocationCreationMessage.class);
         try {
             locationApplication.populateData(locationCreationMessage);
-            System.out.println("Testeeeeeeeeee!");
         } catch (HttpClientErrorException e) {
-            System.out.println("Teste!");
             throw new ImmediateRequeueAmqpException(value);
         }
     }
