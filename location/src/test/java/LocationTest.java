@@ -1,5 +1,3 @@
-package uol.location;
-
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
 import org.apache.qpid.server.Broker;
 import org.apache.qpid.server.BrokerOptions;
@@ -13,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import uol.location.Application;
 import uol.location.location.application.LocationApplication;
 import uol.location.location.domain.Location;
 import uol.location.location.queue.LocationCreationMessage;
@@ -22,11 +21,11 @@ import uol.location.location.repository.entity.WeatherRepositoryEntity;
 
 import static org.springframework.test.annotation.DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD;
 
-@SpringBootTest
+@SpringBootTest(classes = Application.class)
 @ActiveProfiles("test")
 @RunWith(SpringJUnit4ClassRunner.class)
 @DirtiesContext(classMode = BEFORE_EACH_TEST_METHOD)
-public class LocationCT {
+public class LocationTest {
 
     @Rule
     public WireMockRule wireMockRule = new WireMockRule(8089);

@@ -1,5 +1,3 @@
-package uol.treino;
-
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
 import org.apache.qpid.server.Broker;
 import org.apache.qpid.server.BrokerOptions;
@@ -13,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import uol.treino.TreinoUolApplication;
 import uol.treino.person.application.PersonApplication;
 import uol.treino.person.domain.Person;
 import uol.treino.person.repository.PersonRepository;
@@ -20,7 +19,7 @@ import uol.treino.person.repository.entity.PersonRepositoryEntity;
 
 import static org.springframework.test.annotation.DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD;
 
-@SpringBootTest
+@SpringBootTest(classes = TreinoUolApplication.class)
 @ActiveProfiles("test")
 @RunWith(SpringJUnit4ClassRunner.class)
 @DirtiesContext(classMode = BEFORE_EACH_TEST_METHOD)
