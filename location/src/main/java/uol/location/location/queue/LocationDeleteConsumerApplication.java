@@ -10,7 +10,7 @@ import java.io.IOException;
 
 @Component
 //@RabbitListener(queues = "location-delete")
-@RabbitListener(bindings = @QueueBinding(exchange = @Exchange("myExchange"), value = @Queue("location-delete")))
+@RabbitListener(bindings = @QueueBinding(exchange = @Exchange("test"), value = @Queue("location-delete")))
 public class LocationDeleteConsumerApplication {
     private final LocationApplication locationApplication;
 
