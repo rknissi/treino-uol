@@ -9,8 +9,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import uol.location.location.application.LocationApplication;
 
 @Component
-//@RabbitListener(queues = "location-creation")
-@RabbitListener(bindings = @QueueBinding(exchange = @Exchange(value = "test"), value = @Queue("location-creation")))
+@RabbitListener(queues = "location-creation")
 public class LocationCreationConsumerApplication {
     private final LocationApplication locationApplication;
 

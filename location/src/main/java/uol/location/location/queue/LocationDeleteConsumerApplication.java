@@ -9,8 +9,7 @@ import uol.location.location.application.LocationApplication;
 import java.io.IOException;
 
 @Component
-//@RabbitListener(queues = "location-delete")
-@RabbitListener(bindings = @QueueBinding(exchange = @Exchange("test"), value = @Queue("location-delete")))
+@RabbitListener(queues = "location-delete")
 public class LocationDeleteConsumerApplication {
     private final LocationApplication locationApplication;
 
