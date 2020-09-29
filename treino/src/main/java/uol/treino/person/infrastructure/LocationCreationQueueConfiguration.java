@@ -19,26 +19,21 @@ public class LocationCreationQueueConfiguration {
     }
 
     @Bean(name = "binding-creation" )
-    public Binding bindingCreation(Exchange direct,
+    public Binding bindingCreation(DirectExchange direct,
                                    @Qualifier("location-creation") Queue createLocationCreationQueue) {
         return BindingBuilder.bind(createLocationCreationQueue)
-                .to(direct).with(createLocationCreationQueue.getName()).noargs();
+                .to(direct).withQueueName();
     }
 
     @Bean(name = "binding-delete" )
-    public Binding bindingDelete(Exchange direct,
+    public Binding bindingDelete(DirectExchange direct,
                                  @Qualifier("location-delete") Queue createLocationDeleteQueue) {
         return BindingBuilder.bind(createLocationDeleteQueue)
-                .to(direct).with(createLocationDeleteQueue.getName()).noargs();
+                .to(direct).withQueueName();
     }
 
     @Bean
-    public DirectExchange direct() {
-        return new DirectExchange("test");
+    public DirectExchange directExchange() {
+        return new DirectExchange("location");
     }
-    //@Bean
-    //public Exchange direct() {
-    //    return new TopicExchange("test");
-    //}
-
 }

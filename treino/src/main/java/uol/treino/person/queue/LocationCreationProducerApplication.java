@@ -30,8 +30,7 @@ public class LocationCreationProducerApplication {
     public void sendMessage(String ipv4, Long id) {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            //this.template.convertAndSend(binding.getExchange(), queue.getName(), objectMapper.writeValueAsString(new LocationCreationMessage(ipv4, id)));
-            this.template.convertAndSend(binding.getExchange(), binding.getRoutingKey(), objectMapper.writeValueAsString(new LocationCreationMessage(ipv4, id)));
+            this.template.convertAndSend(binding.getExchange(), queue.getName(), objectMapper.writeValueAsString(new LocationCreationMessage(ipv4, id)));
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
