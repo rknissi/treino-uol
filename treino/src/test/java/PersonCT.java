@@ -8,7 +8,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import uol.treino.TreinoUolApplication;
@@ -17,12 +16,14 @@ import uol.treino.person.domain.Person;
 import uol.treino.person.repository.PersonRepository;
 import uol.treino.person.repository.entity.PersonRepositoryEntity;
 
-import static org.springframework.test.annotation.DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD;
+import java.util.List;
+
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
 
 @SpringBootTest(classes = TreinoUolApplication.class)
 @ActiveProfiles("test")
 @RunWith(SpringJUnit4ClassRunner.class)
-@DirtiesContext(classMode = BEFORE_EACH_TEST_METHOD)
 public class PersonCT {
 
     @Rule
@@ -51,6 +52,8 @@ public class PersonCT {
     @Test
     public void createPersonCT() {
 
+        List<Person> personList = personApplication.getAll();
+
         String name = "asd";
         Integer age = 123;
 
@@ -60,7 +63,7 @@ public class PersonCT {
 
         Person personResponse = personApplication.create(person, "127.0.0.1");
 
-        Assert.assertEquals("2", personResponse.getId().toString());
+        Assert.assertThat(personResponse.getId(), is(notNullValue()));
         Assert.assertEquals("asd", personResponse.getName());
         Assert.assertEquals("123", personResponse.getAge().toString());
     }
