@@ -8,7 +8,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import uol.location.Application;
@@ -19,12 +18,12 @@ import uol.location.location.repository.LocationRepository;
 import uol.location.location.repository.entity.LocationRepositoryEntity;
 import uol.location.location.repository.entity.WeatherRepositoryEntity;
 
-import static org.springframework.test.annotation.DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
 
 @SpringBootTest(classes = Application.class)
 @ActiveProfiles("test")
 @RunWith(SpringJUnit4ClassRunner.class)
-@DirtiesContext(classMode = BEFORE_EACH_TEST_METHOD)
 public class LocationTest {
 
     @Rule
@@ -55,24 +54,24 @@ public class LocationTest {
     @Test
     public void createLocationCT() throws InterruptedException {
         LocationCreationMessage locationCreationMessage = new LocationCreationMessage();
-        locationCreationMessage.setId(3L);
+        locationCreationMessage.setId(5L);
         locationCreationMessage.setIp("127.0.0.1");
         locationApplication.populateData(locationCreationMessage);
 
-        Location location = locationApplication.getById(3L);
+        Location location = locationApplication.getById(5L);
 
-        Assert.assertEquals("3", location.getId().toString());
+        Assert.assertThat(location.getId(), is(notNullValue()));
         Assert.assertEquals("Brazil", location.getCountry());
         Assert.assertEquals("São Paulo", location.getCity());
-        Assert.assertEquals("3", location.getWeather().getId().toString());
+        Assert.assertThat(location.getWeather().getId(), is(notNullValue()));
         Assert.assertEquals("25", location.getWeather().getMaxTemp().toString());
         Assert.assertEquals("14", location.getWeather().getMinTemp().toString());
     }
 
     @Test
     public void deleteLocationById() {
-        addLocation(1L, "Teste", "Teste2", 10L, 5L);
-        Boolean aBoolean = locationApplication.deleteById(2L);
+        addLocation(3L, "Teste", "Teste2", 10L, 5L);
+        Boolean aBoolean = locationApplication.deleteById(3L);
 
         Assert.assertEquals(true, aBoolean);
     }
@@ -80,14 +79,15 @@ public class LocationTest {
 
     @Test
     public void getLocationByIdCT() {
-        Location location = locationApplication.getById(2L);
+        addLocation(4L, "Teste", "Teste2", 10L, 5L);
+        Location location = locationApplication.getById(4L);
 
-        Assert.assertEquals("2", location.getId().toString());
-        Assert.assertEquals("Brazil", location.getCountry());
-        Assert.assertEquals("São Paulo", location.getCity());
-        Assert.assertEquals("2", location.getWeather().getId().toString());
-        Assert.assertEquals("20", location.getWeather().getMaxTemp().toString());
-        Assert.assertEquals("10", location.getWeather().getMinTemp().toString());
+        Assert.assertThat(location.getId(), is(notNullValue()));
+        Assert.assertEquals("Teste", location.getCountry());
+        Assert.assertEquals("Teste2", location.getCity());
+        Assert.assertThat(location.getWeather().getId(), is(notNullValue()));
+        Assert.assertEquals("10", location.getWeather().getMaxTemp().toString());
+        Assert.assertEquals("5", location.getWeather().getMinTemp().toString());
     }
 
     private void addLocation(Long personId, String country, String city, Long maxTemp, Long minTemp) {
