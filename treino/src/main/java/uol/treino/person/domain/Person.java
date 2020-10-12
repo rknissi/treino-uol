@@ -1,9 +1,12 @@
 package uol.treino.person.domain;
 
+import java.time.LocalDate;
+
 public class Person {
     private Long id;
     private String name;
     private Integer age;
+    private LocalDate birthDate;
     private Location location;
 
     public Person(){
@@ -47,5 +50,13 @@ public class Person {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
     }
 }

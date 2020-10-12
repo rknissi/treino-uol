@@ -8,6 +8,8 @@ import uol.treino.person.queue.LocationDeleteProducerApplication;
 import uol.treino.person.repository.entity.PersonRepositoryEntity;
 import uol.treino.person.repository.PersonRepository;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -56,6 +58,7 @@ public class PersonApplication {
         Optional<PersonRepositoryEntity> optionalPersonEntity = personRepository.findById(id);
         if (optionalPersonEntity.isPresent() && optionalPersonEntity.get().isValid()) {
             PersonRepositoryEntity personRepositoryEntity = optionalPersonEntity.get();
+            personRepositoryEntity.setAge(updatePersonAge(personRepositoryEntity));
             Person person = toPerson(personRepositoryEntity);
             person.setLocation(locationApplication.getById(personRepositoryEntity.getId()));
             return person;
@@ -69,6 +72,7 @@ public class PersonApplication {
         personEntities.forEach(personRepositoryEntity -> {
             if (personRepositoryEntity.isValid()) {
                 Person person = toPerson(personRepositoryEntity);
+                personRepositoryEntity.setAge(updatePersonAge(personRepositoryEntity));
                 person.setLocation(locationApplication.getById(personRepositoryEntity.getId()));
                 persons.add(person);
             }
@@ -97,6 +101,16 @@ public class PersonApplication {
             }
         }
         return personRepositoryEntity;
+    }
+
+    private Integer updatePersonAge(PersonRepositoryEntity personRepositoryEntity) {
+        LocalDate now = LocalDate.now();
+        if (personRepositoryEntity.getBirthDate() != null) {
+            return Period.between(personRepositoryEntity.getBirthDate(), now).getYears();
+        } else {
+            Integer plusYears = Period.between(personRepositoryEntity.getCreationDate(), now).getYears();
+            return personRepositoryEntity.getAge() + plusYears;
+        }
     }
 
 }

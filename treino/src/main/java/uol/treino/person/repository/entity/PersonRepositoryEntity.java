@@ -2,6 +2,7 @@ package uol.treino.person.repository.entity;
 
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 public class PersonRepositoryEntity {
@@ -12,6 +13,8 @@ public class PersonRepositoryEntity {
 
     private String name;
     private Integer age;
+    private LocalDate birthDate;
+    private LocalDate creationDate;
 
     private boolean valid;
 
@@ -54,5 +57,21 @@ public class PersonRepositoryEntity {
 
     public void setValid(boolean valid) {
         this.valid = valid;
+    }
+
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public LocalDate getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(LocalDate creationDate) {
+        this.creationDate = creationDate;
     }
 }

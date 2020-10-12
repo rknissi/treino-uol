@@ -3,6 +3,9 @@ package uol.treino.person.converter;
 import uol.treino.person.domain.Person;
 import uol.treino.person.repository.entity.PersonRepositoryEntity;
 
+import java.time.LocalDate;
+import java.time.Period;
+
 public class PersonConverter {
 
     public static PersonRepositoryEntity toPersonRepositoryEntity(Person person) {
@@ -10,7 +13,13 @@ public class PersonConverter {
 
         personRepositoryEntity.setId(person.getId());
         personRepositoryEntity.setName(person.getName());
-        personRepositoryEntity.setAge(person.getAge());
+        personRepositoryEntity.setCreationDate(LocalDate.now());
+        if (person.getBirthDate() != null) {
+            personRepositoryEntity.setBirthDate(person.getBirthDate());
+            personRepositoryEntity.setAge(Period.between(person.getBirthDate(), LocalDate.now()).getYears());
+        } else {
+            personRepositoryEntity.setAge(person.getAge());
+        }
 
         return personRepositoryEntity;
     }
@@ -20,6 +29,7 @@ public class PersonConverter {
         person.setId(personRepositoryEntity.getId());
         person.setName(personRepositoryEntity.getName());
         person.setAge(personRepositoryEntity.getAge());
+        person.setBirthDate(personRepositoryEntity.getBirthDate());
 
         return person;
     }
