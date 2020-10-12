@@ -17,6 +17,8 @@ public class PersonConverter {
         if (person.getBirthDate() != null) {
             personRepositoryEntity.setBirthDate(person.getBirthDate());
             personRepositoryEntity.setAge(Period.between(person.getBirthDate(), LocalDate.now()).getYears());
+        } else if (person.getAge() == null) {
+            personRepositoryEntity.setAge(0);
         } else {
             personRepositoryEntity.setAge(person.getAge());
         }

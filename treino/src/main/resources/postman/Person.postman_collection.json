@@ -26,6 +26,26 @@
 			"response": []
 		},
 		{
+			"name": "GET - Get person by Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/persons/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"persons",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "POST - Create Person",
 			"request": {
 				"method": "POST",
@@ -45,6 +65,46 @@
 				"body": {
 					"mode": "raw",
 					"raw": "{\n\t\"name\":\"Testee Grandeswe\",\n\t\"age\":15\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/persons",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"persons"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST - Create Person (birthDate)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "ipv4",
+						"value": "177.140.72.58",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\":\"Testee Grandeswe\",\n\t\"birthDate\":\"1995-10-13\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"

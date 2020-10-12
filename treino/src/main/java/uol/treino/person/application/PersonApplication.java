@@ -35,6 +35,7 @@ public class PersonApplication {
     public Person create(Person person, String ip) {
         PersonRepositoryEntity personRepositoryEntity = toPersonRepositoryEntity(person);
         person.setId(personRepository.save(personRepositoryEntity).getId());
+        person.setAge(updatePersonAge(personRepositoryEntity));
 
         locationCreationProducerApplication.sendMessage(ip, person.getId());
 
