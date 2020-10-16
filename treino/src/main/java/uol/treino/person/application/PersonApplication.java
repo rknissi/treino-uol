@@ -36,6 +36,7 @@ public class PersonApplication {
         PersonRepositoryEntity personRepositoryEntity = toPersonRepositoryEntity(person);
         person.setId(personRepository.save(personRepositoryEntity).getId());
         person.setAge(updatePersonAge(personRepositoryEntity));
+        person.setBirthDate(personRepositoryEntity.getBirthDate());
 
         locationCreationProducerApplication.sendMessage(ip, person.getId());
 
@@ -106,12 +107,7 @@ public class PersonApplication {
 
     private Integer updatePersonAge(PersonRepositoryEntity personRepositoryEntity) {
         LocalDate now = LocalDate.now();
-        if (personRepositoryEntity.getBirthDate() != null) {
-            return Period.between(personRepositoryEntity.getBirthDate(), now).getYears();
-        } else {
-            Integer plusYears = Period.between(personRepositoryEntity.getCreationDate(), now).getYears();
-            return personRepositoryEntity.getAge() + plusYears;
-        }
+        return Period.between(personRepositoryEntity.getBirthDate(), now).getYears();
     }
 
 }

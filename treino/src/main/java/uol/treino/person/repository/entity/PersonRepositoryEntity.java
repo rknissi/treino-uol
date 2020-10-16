@@ -14,7 +14,7 @@ public class PersonRepositoryEntity {
     private String name;
     private Integer age;
     private LocalDate birthDate;
-    private LocalDate creationDate;
+    private boolean trustyBirthDate;
 
     private boolean valid;
 
@@ -67,11 +67,11 @@ public class PersonRepositoryEntity {
         this.birthDate = birthDate;
     }
 
-    public LocalDate getCreationDate() {
-        return creationDate;
+    public boolean isTrustyBirthDate() {
+        return trustyBirthDate;
     }
 
-    public void setCreationDate(LocalDate creationDate) {
-        this.creationDate = creationDate;
+    public void setTrustyBirthDate(boolean trustyBirthDate) {
+        this.trustyBirthDate = trustyBirthDate;
     }
 }

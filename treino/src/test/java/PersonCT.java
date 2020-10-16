@@ -55,8 +55,6 @@ public class PersonCT {
     @Test
     public void createPersonCT() {
 
-        List<Person> personList = personApplication.getAll();
-
         String name = "asd";
         Integer age = 123;
 
@@ -138,7 +136,7 @@ public class PersonCT {
         person.setId(id);
         person.setName(name);
         person.setAge(age);
-        person.setCreationDate(LocalDate.now());
+        person.setBirthDate(LocalDate.now().minusYears(age));
 
         personRepository.save(person);
     }
@@ -149,7 +147,6 @@ public class PersonCT {
         person.setId(id);
         person.setName(name);
         person.setBirthDate(birthDate);
-        person.setCreationDate(LocalDate.now());
 
         personRepository.save(person);
     }

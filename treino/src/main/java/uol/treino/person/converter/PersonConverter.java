@@ -13,14 +13,14 @@ public class PersonConverter {
 
         personRepositoryEntity.setId(person.getId());
         personRepositoryEntity.setName(person.getName());
-        personRepositoryEntity.setCreationDate(LocalDate.now());
         if (person.getBirthDate() != null) {
             personRepositoryEntity.setBirthDate(person.getBirthDate());
             personRepositoryEntity.setAge(Period.between(person.getBirthDate(), LocalDate.now()).getYears());
-        } else if (person.getAge() == null) {
-            personRepositoryEntity.setAge(0);
+            personRepositoryEntity.setTrustyBirthDate(true);
         } else {
+            personRepositoryEntity.setBirthDate(LocalDate.now().minusYears(person.getAge()));
             personRepositoryEntity.setAge(person.getAge());
+            personRepositoryEntity.setTrustyBirthDate(false);
         }
 
         return personRepositoryEntity;
