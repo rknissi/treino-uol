@@ -1,5 +1,6 @@
 package uol.treino.person.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
@@ -9,7 +10,10 @@ import java.time.LocalDate;
 
 public class Person {
     private Long id;
+
+    @JsonProperty(required = true)
     private String name;
+
     private Integer age;
 
     @JsonDeserialize(using = LocalDateDeserializer.class)

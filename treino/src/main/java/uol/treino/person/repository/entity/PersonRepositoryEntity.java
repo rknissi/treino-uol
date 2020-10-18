@@ -5,17 +5,26 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
+@Table(name = "person")
 public class PersonRepositoryEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(name="name")
     private String name;
+
+    @Column(name="age")
     private Integer age;
+
+    @Column(name="birth_date")
     private LocalDate birthDate;
+
+    @Column(name="trusty_birth_date")
     private boolean trustyBirthDate;
 
+    @Column(name="valid")
     private boolean valid;
 
     public PersonRepositoryEntity() {

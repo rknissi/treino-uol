@@ -5,6 +5,6 @@ CREATE TABLE person (
   name VARCHAR(250) NOT NULL,
   age VARCHAR(250) NOT NULL,
   birth_date date NOT NULL,
-  creation_date date NOT NULL,
-  locationid INT NOT NULL
+  trusty_birth_date boolean NOT NULL,
+  valid boolean NOT NULL
 );
