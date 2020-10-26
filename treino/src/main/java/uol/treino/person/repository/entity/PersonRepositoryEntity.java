@@ -1,5 +1,6 @@
 package uol.treino.person.repository.entity;
 
+import com.sun.istack.NotNull;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -9,21 +10,27 @@ import java.time.LocalDate;
 public class PersonRepositoryEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @NotNull
+    @SequenceGenerator(name="person_generator",sequenceName="person_generator")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="person_generator")
     private Long id;
 
+    @NotNull
     @Column(name="name")
     private String name;
 
     @Column(name="age")
     private Integer age;
 
+    @NotNull
     @Column(name="birth_date")
     private LocalDate birthDate;
 
+    @NotNull
     @Column(name="trusty_birth_date")
-    private boolean trustyBirthDate;
+    private Boolean trustyBirthDate;
 
+    @NotNull
     @Column(name="valid")
     private boolean valid;
 

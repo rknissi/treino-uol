@@ -1,5 +1,7 @@
 package uol.treino.person.application;
 
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 import uol.treino.person.domain.Person;
@@ -108,6 +110,16 @@ public class PersonApplication {
     private Integer updatePersonAge(PersonRepositoryEntity personRepositoryEntity) {
         LocalDate now = LocalDate.now();
         return Period.between(personRepositoryEntity.getBirthDate(), now).getYears();
+    }
+
+    @EventListener(ApplicationReadyEvent.class)
+    public void updatePersonTable() {
+        Iterable<PersonRepositoryEntity> updatableUsers = personRepository.findNullTrustyBirthDate();
+        updatableUsers.forEach(user -> {
+            user.setBirthDate(LocalDate.now().minusYears(user.getAge()));
+            user.setTrustyBirthDate(false);
+            personRepository.save(user);
+        });
     }
 
 }
