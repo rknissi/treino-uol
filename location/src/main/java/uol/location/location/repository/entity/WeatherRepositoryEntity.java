@@ -3,18 +3,19 @@ package uol.location.location.repository.entity;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "weather")
 public class WeatherRepositoryEntity {
 
     @Id
-    @SequenceGenerator(name="weatherId",sequenceName="weatherId")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="weatherId")
+    @SequenceGenerator(name="weather_generator",sequenceName="weather_generator")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="weather_generator")
     private Long id;
 
+    @Column(name="min_temp")
     private Long minTemp;
-    private Long maxTemp;
 
-    @OneToOne
-    private LocationRepositoryEntity locationRepositoryEntity;
+    @Column(name="max_temp")
+    private Long maxTemp;
 
     public Long getId() {
         return id;
@@ -40,11 +41,4 @@ public class WeatherRepositoryEntity {
         this.maxTemp = maxTemp;
     }
 
-    public LocationRepositoryEntity getLocationRepositoryEntity() {
-        return locationRepositoryEntity;
-    }
-
-    public void setLocationRepositoryEntity(LocationRepositoryEntity locationRepositoryEntity) {
-        this.locationRepositoryEntity = locationRepositoryEntity;
-    }
 }

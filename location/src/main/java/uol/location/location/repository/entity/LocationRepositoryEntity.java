@@ -3,22 +3,38 @@ package uol.location.location.repository.entity;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "location")
 public class LocationRepositoryEntity {
     @Id
-    @SequenceGenerator(name="locationId",sequenceName="locationId")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="locationId")
+    @SequenceGenerator(name="location_generator",sequenceName="location_generator")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="location_generator")
     private Long id;
 
+    @Column(name="continent")
     private String continent;
+
+    @Column(name="country")
     private String country;
+
+    @Column(name="subdivision1")
     private String subdivision1;
+
+    @Column(name="subdivision2")
     private String subdivision2;
+
+    @Column(name="city")
     private String city;
+
+    @Column(name="latitude")
     private String latitude;
+
+    @Column(name="longitude")
     private String longitude;
 
+    @Column(name="person_id")
     private Long personId;
 
+    @Column(name="valid")
     private boolean valid;
 
 

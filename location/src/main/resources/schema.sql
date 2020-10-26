@@ -1,3 +1,4 @@
+/*
 DROP TABLE IF EXISTS location;
 DROP TABLE IF EXISTS weather;
 
@@ -22,4 +23,5 @@ CREATE TABLE location (
   weather_id int ,
   foreign key (weather_id) REFERENCES weather(id)
 );
+*/
 
