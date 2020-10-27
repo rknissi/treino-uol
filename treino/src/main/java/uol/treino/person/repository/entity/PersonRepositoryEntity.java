@@ -15,32 +15,23 @@ public class PersonRepositoryEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="person_generator")
     private Long id;
 
-    @NotNull
-    @Column(name="name")
+    @Column(name="name", nullable = false)
     private String name;
 
-    @Column(name="age")
+    @Column(name="age" , nullable = true)
     private Integer age;
 
-    @NotNull
-    @Column(name="birth_date")
+    @Column(name="birth_date", nullable = false)
     private LocalDate birthDate;
 
-    @NotNull
-    @Column(name="trusty_birth_date")
+    @Column(name="trusty_birth_date", nullable = false)
     private Boolean trustyBirthDate;
 
-    @NotNull
-    @Column(name="valid")
+    @Column(name="valid", nullable = false)
     private boolean valid;
 
     public PersonRepositoryEntity() {
         this.valid = true;
-    }
-
-    public PersonRepositoryEntity(String name, Integer age) {
-        this.name = name;
-        this.age = age;
     }
 
     public Long getId() {

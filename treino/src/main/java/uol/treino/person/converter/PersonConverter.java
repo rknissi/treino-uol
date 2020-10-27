@@ -15,11 +15,9 @@ public class PersonConverter {
         personRepositoryEntity.setName(person.getName());
         if (person.getBirthDate() != null) {
             personRepositoryEntity.setBirthDate(person.getBirthDate());
-            personRepositoryEntity.setAge(Period.between(person.getBirthDate(), LocalDate.now()).getYears());
             personRepositoryEntity.setTrustyBirthDate(true);
         } else {
             personRepositoryEntity.setBirthDate(LocalDate.now().minusYears(person.getAge()));
-            personRepositoryEntity.setAge(person.getAge());
             personRepositoryEntity.setTrustyBirthDate(false);
         }
 
@@ -30,7 +28,6 @@ public class PersonConverter {
 
         person.setId(personRepositoryEntity.getId());
         person.setName(personRepositoryEntity.getName());
-        person.setAge(personRepositoryEntity.getAge());
         person.setBirthDate(personRepositoryEntity.getBirthDate());
 
         return person;

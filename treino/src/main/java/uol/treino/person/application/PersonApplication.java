@@ -37,7 +37,7 @@ public class PersonApplication {
     public Person create(Person person, String ip) {
         PersonRepositoryEntity personRepositoryEntity = toPersonRepositoryEntity(person);
         person.setId(personRepository.save(personRepositoryEntity).getId());
-        person.setAge(updatePersonAge(personRepositoryEntity));
+        person.setAge(calculateAge(personRepositoryEntity.getBirthDate()));
         person.setBirthDate(personRepositoryEntity.getBirthDate());
 
         locationCreationProducerApplication.sendMessage(ip, person.getId());
@@ -51,6 +51,7 @@ public class PersonApplication {
             if  (personRepositoryEntity.isValid()) {
                 personRepository.save(applyDiff(personRepositoryEntity, person));
                 person = toPerson(personRepositoryEntity);
+                person.setAge(calculateAge(personRepositoryEntity.getBirthDate()));
                 person.setLocation(locationApplication.getById(personRepositoryEntity.getId()));
                 return person;
             }
@@ -62,8 +63,8 @@ public class PersonApplication {
         Optional<PersonRepositoryEntity> optionalPersonEntity = personRepository.findById(id);
         if (optionalPersonEntity.isPresent() && optionalPersonEntity.get().isValid()) {
             PersonRepositoryEntity personRepositoryEntity = optionalPersonEntity.get();
-            personRepositoryEntity.setAge(updatePersonAge(personRepositoryEntity));
             Person person = toPerson(personRepositoryEntity);
+            person.setAge(calculateAge(personRepositoryEntity.getBirthDate()));
             person.setLocation(locationApplication.getById(personRepositoryEntity.getId()));
             return person;
         }
@@ -76,7 +77,7 @@ public class PersonApplication {
         personEntities.forEach(personRepositoryEntity -> {
             if (personRepositoryEntity.isValid()) {
                 Person person = toPerson(personRepositoryEntity);
-                personRepositoryEntity.setAge(updatePersonAge(personRepositoryEntity));
+                person.setAge(calculateAge(personRepositoryEntity.getBirthDate()));
                 person.setLocation(locationApplication.getById(personRepositoryEntity.getId()));
                 persons.add(person);
             }
@@ -100,16 +101,21 @@ public class PersonApplication {
             if (!ObjectUtils.isEmpty(person.getName())) {
                 personRepositoryEntity.setName(person.getName());
             }
-            if (!ObjectUtils.isEmpty(person.getAge())) {
-                personRepositoryEntity.setAge(person.getAge());
+            if (personRepositoryEntity.isTrustyBirthDate()) {
+                if (!ObjectUtils.isEmpty(person.getBirthDate())) {
+                    personRepositoryEntity.setBirthDate(person.getBirthDate());
+                }
+            } else {
+                if (!ObjectUtils.isEmpty(person.getAge()))
+                personRepositoryEntity.setBirthDate(LocalDate.now().minusYears(person.getAge()));
             }
         }
         return personRepositoryEntity;
     }
 
-    private Integer updatePersonAge(PersonRepositoryEntity personRepositoryEntity) {
+    private Integer calculateAge(LocalDate birthDate) {
         LocalDate now = LocalDate.now();
-        return Period.between(personRepositoryEntity.getBirthDate(), now).getYears();
+        return Period.between(birthDate, now).getYears();
     }
 
     @EventListener(ApplicationReadyEvent.class)

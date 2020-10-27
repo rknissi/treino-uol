@@ -137,6 +137,7 @@ public class PersonCT {
         person.setName(name);
         person.setAge(age);
         person.setBirthDate(LocalDate.now().minusYears(age));
+        person.setTrustyBirthDate(false);
 
         personRepository.save(person);
     }
@@ -147,6 +148,7 @@ public class PersonCT {
         person.setId(id);
         person.setName(name);
         person.setBirthDate(birthDate);
+        person.setTrustyBirthDate(true);
 
         personRepository.save(person);
     }
